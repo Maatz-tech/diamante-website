@@ -11,21 +11,21 @@ import HighlightCard from '../HighlightCard.astro';
   <!-- Decorações de fundo -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
     <img
-      src="/images/line-shape.webp"
+      src={`${import.meta.env.BASE_URL}images/line-shape.webp`}
       alt=""
       width="2048"
       height="1430"
       class="absolute -left-[877px] -top-[378px] w-[2515px] max-w-none opacity-30"
     />
     <img
-      src="/images/line-shape.webp"
+      src={`${import.meta.env.BASE_URL}images/line-shape.webp`}
       alt=""
       width="2048"
       height="1430"
       class="absolute -top-[364px] left-[212px] w-[2515px] max-w-none -scale-y-100 opacity-30"
     />
     <img
-      src="/images/texture.webp"
+      src={`${import.meta.env.BASE_URL}images/texture.webp`}
       alt=""
       width="480"
       height="600"
@@ -33,28 +33,28 @@ import HighlightCard from '../HighlightCard.astro';
     />
     <!-- Leque dourado + curva. Desktop: lado direito. Mobile: canto inferior. -->
     <img
-      src="/images/hero-vector3.svg"
+      src={`${import.meta.env.BASE_URL}images/hero-vector3.svg`}
       alt=""
       width="701"
       height="534"
       class="absolute bottom-0 right-0 w-[78%] max-w-none lg:bottom-auto lg:left-[739px] lg:top-[162px] lg:w-[701px]"
     />
     <img
-      src="/images/hero-vector4.svg"
+      src={`${import.meta.env.BASE_URL}images/hero-vector4.svg`}
       alt=""
       width="735"
       height="561"
       class="absolute bottom-[8%] right-0 w-[82%] max-w-none lg:bottom-auto lg:left-[708px] lg:top-[138px] lg:w-[735px]"
     />
     <img
-      src="/images/ellipse-1.svg"
+      src={`${import.meta.env.BASE_URL}images/ellipse-1.svg`}
       alt=""
       width="702"
       height="800"
       class="absolute left-[321px] top-12 hidden w-[702px] max-w-none lg:block"
     />
     <img
-      src="/images/ellipse-2.svg"
+      src={`${import.meta.env.BASE_URL}images/ellipse-2.svg`}
       alt=""
       width="702"
       height="524"
@@ -71,7 +71,7 @@ import HighlightCard from '../HighlightCard.astro';
       <h1 class="text-white">
         <span class="hero-kicker block">Programa</span>
         <img
-          src="/images/logo-trainee.webp"
+          src={`${import.meta.env.BASE_URL}images/logo-trainee.webp`}
           alt="Trainee"
           width="440"
           height="102"
@@ -113,8 +113,8 @@ import HighlightCard from '../HighlightCard.astro';
     class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden lg:absolute lg:bottom-0 lg:left-[calc(50%+34px)] lg:mt-0 lg:h-[591px] lg:w-[418px] lg:-translate-x-1/2"
   >
     <img
-      src="/images/hero-photo.webp"
-      srcset="/images/hero-photo-sm.webp 640w, /images/hero-photo.webp 1125w"
+      src={`${import.meta.env.BASE_URL}images/hero-photo.webp`}
+      srcset={`${import.meta.env.BASE_URL}images/hero-photo-sm.webp 640w, ${import.meta.env.BASE_URL}images/hero-photo.webp 1125w`}
       sizes="(min-width: 1024px) 418px, 300px"
       alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
       width="418"

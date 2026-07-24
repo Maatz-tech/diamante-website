@@ -10,7 +10,7 @@ import Button from './Button.astro';
     <!-- Logo -->
     <a href="#topo" aria-label="Diamante Energia — início" class="shrink-0">
       <img
-        src="/images/logo-diamante-branco.webp"
+        src={`${import.meta.env.BASE_URL}images/logo-diamante-branco.webp`}
         alt="Diamante Energia"
         width="190"
         height="48"
@@ -62,7 +62,7 @@ import Button from './Button.astro';
   >
     <div class="container-page flex items-center justify-between py-4">
       <img
-        src="/images/logo-diamante-branco.webp"
+        src={`${import.meta.env.BASE_URL}images/logo-diamante-branco.webp`}
         alt="Diamante Energia"
         width="190"
         height="48"

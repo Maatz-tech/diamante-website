@@ -8,15 +8,15 @@ import SectionHeader from '../SectionHeader.astro';
       eyebrow="O Programa"
       title="Mais do que acelerar sua carreira, queremos preparar você para compreender os desafios da operação, contribuir com soluções e crescer junto com a empresa."
       align="center"
-      class="lg:mx-auto lg:max-w-[1010px]"
+      class="lg:mx-auto lg:max-w-[930px]"
     />
 
     <div class="flex flex-col gap-6 lg:flex-row lg:items-stretch">
       <div class="lg:relative lg:min-h-px lg:flex-1">
         <img
-          src="/images/programa.webp"
+          src={`${import.meta.env.BASE_URL}images/programa.webp`}
           data-reveal-img
-          srcset="/images/programa-sm.webp 680w, /images/programa.webp 1200w"
+          srcset={`${import.meta.env.BASE_URL}images/programa-sm.webp 680w, ${import.meta.env.BASE_URL}images/programa.webp 1200w`}
           sizes="(min-width: 1024px) 588px, 327px"
           alt="Equipe da Diamante Energia em atividade na operação"
           width="588"
@@ -27,12 +27,12 @@ import SectionHeader from '../SectionHeader.astro';
       </div>
 
       <div class="flex flex-col gap-6 lg:flex-1">
-        <p class="rounded-2xl bg-blue p-6 text-xl/[1.3] text-white">
+        <p class="rounded-2xl bg-blue p-6 text-xl/[1.25] text-white">
           O <strong class="font-bold">Programa Trainee Diamante Energia</strong>
           foi criado para formar profissionais preparados para assumir futuras
           posições de liderança.
         </p>
-        <p class="rounded-3xl bg-white p-6 text-base/[1.3] text-[#3c3c42]">
+        <p class="rounded-3xl bg-white p-6 text-base/[1.25] text-[#3c3c42]">
           Ao longo da jornada, você terá contato com diferentes áreas da
           operação, ampliando sua visão sistêmica do negócio e desenvolvendo
           competências técnicas e comportamentais em um ambiente de aprendizado

@@ -17,8 +17,6 @@ const valueClass = size === 'lg' ? 'text-2xl/[1.2]' : 'text-xl/[1.2]';
 ---
 
 <div data-card class={`card border ${borderClass} p-6 text-center`}>
-  <!-- tracking levemente negativo: o Montserrat é mais largo que a Gotham do design
-       e "Inscrições para todo Brasil" estourava a linha por 1px -->
-  <p class="text-lg/[1.2] tracking-[-0.012em] text-navy">{label}</p>
+  <p class="text-lg/[1.2] text-navy">{label}</p>
   <p class={`mt-2 font-medium text-navy ${valueClass}`}>{value}</p>
 </div>

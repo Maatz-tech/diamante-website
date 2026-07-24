@@ -17,6 +17,21 @@ const {
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const ogImageUrl = new URL(ogImage, SITE.url).href;
 
+// GitHub Pages serve o site num subcaminho (base). Assets em public/ precisam
+// dele. O @font-face vive aqui (e não em global.css) porque CSS puro não acessa
+// import.meta.env.BASE_URL — sem isso as fontes dariam 404 no subcaminho.
+const base = import.meta.env.BASE_URL;
+const asset = (p: string) => `${base}${p.replace(/^\//, '')}`;
+
+// Gotham — a fonte do design. Book/Medium/Bold/Black mapeados para 400/500/700/900.
+// Não são subsetadas (a origem é OTF completo), por isso sem unicode-range.
+const fontFaceCss = [400, 500, 700, 900]
+  .map(
+    (w) =>
+      `@font-face{font-family:'Gotham';font-style:normal;font-weight:${w};font-display:swap;src:url('${asset(`fonts/gotham-${w}.woff2`)}') format('woff2');}`
+  )
+  .join('');
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'JobPosting',
@@ -77,26 +92,27 @@ const jsonLd = {
     />
 
     <!-- Ícones -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href={asset('favicon.ico')} sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href={asset('favicon-32.png')} />
+    <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
+    <link rel="manifest" href={asset('site.webmanifest')} />
     <meta name="theme-color" content="#de7128" />
 
     <!--
-      Fonte self-hosted (ver @font-face em global.css). Só os dois pesos usados
-      acima da dobra entram em preload — os demais carregam sob demanda.
+      Fonte self-hosted. Os @font-face são injetados abaixo (com o base do Pages).
+      Só os dois pesos usados acima da dobra entram em preload.
     -->
+    <style is:inline set:html={fontFaceCss}></style>
     <link
       rel="preload"
-      href="/fonts/montserrat-400-latin.woff2"
+      href={asset('fonts/gotham-400.woff2')}
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/fonts/montserrat-700-latin.woff2"
+      href={asset('fonts/gotham-700.woff2')}
       as="font"
       type="font/woff2"
       crossorigin
