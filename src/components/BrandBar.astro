@@ -1,0 +1,21 @@
+---
+/**
+ * Faixa decorativa com as 4 cores da marca.
+ * Aparece após o Hero (8px) e acima do footer (6px, invertida).
+ */
+interface Props {
+  /** Altura da faixa em px. */
+  height?: number;
+  /** Inverte a ordem das cores. */
+  reverse?: boolean;
+}
+
+const { height = 8, reverse = false } = Astro.props;
+
+const colors = ['bg-blue', 'bg-blue-light', 'bg-yellow', 'bg-orange'];
+const order = reverse ? [...colors].reverse() : colors;
+---
+
+<div aria-hidden="true" class="flex" style={`height:${height}px`}>
+  {order.map((c) => <span class={`flex-1 ${c}`}></span>)}
+</div>

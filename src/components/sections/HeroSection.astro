@@ -1,0 +1,126 @@
+---
+import { APPLY_URL, HIGHLIGHTS } from '../../data/site';
+import Button from '../Button.astro';
+import HighlightCard from '../HighlightCard.astro';
+---
+
+<section
+  id="topo"
+  class="bg-hero-gradient relative isolate overflow-hidden lg:h-[692px]"
+>
+  <!-- Decorações de fundo -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <img
+      src="/images/line-shape.webp"
+      alt=""
+      width="2048"
+      height="1430"
+      class="absolute -left-[877px] -top-[378px] w-[2515px] max-w-none opacity-30"
+    />
+    <img
+      src="/images/line-shape.webp"
+      alt=""
+      width="2048"
+      height="1430"
+      class="absolute -top-[364px] left-[212px] w-[2515px] max-w-none -scale-y-100 opacity-30"
+    />
+    <img
+      src="/images/texture.webp"
+      alt=""
+      width="480"
+      height="600"
+      class="absolute inset-0 size-full object-cover opacity-10 mix-blend-multiply"
+    />
+    <!-- Leque dourado + curva. Desktop: lado direito. Mobile: canto inferior. -->
+    <img
+      src="/images/hero-vector3.svg"
+      alt=""
+      width="701"
+      height="534"
+      class="absolute bottom-0 right-0 w-[78%] max-w-none lg:bottom-auto lg:left-[739px] lg:top-[162px] lg:w-[701px]"
+    />
+    <img
+      src="/images/hero-vector4.svg"
+      alt=""
+      width="735"
+      height="561"
+      class="absolute bottom-[8%] right-0 w-[82%] max-w-none lg:bottom-auto lg:left-[708px] lg:top-[138px] lg:w-[735px]"
+    />
+    <img
+      src="/images/ellipse-1.svg"
+      alt=""
+      width="702"
+      height="800"
+      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none lg:block"
+    />
+    <img
+      src="/images/ellipse-2.svg"
+      alt=""
+      width="702"
+      height="524"
+      class="absolute -left-[412px] -top-[82px] w-[702px] max-w-none"
+    />
+  </div>
+
+  <div
+    class="container-page relative flex flex-col lg:h-full lg:flex-row lg:items-start lg:justify-between"
+  >
+    <!-- Bloco de título e CTA -->
+    <div class="pt-[120px] lg:w-[450px] lg:shrink-0 lg:pt-[178px]">
+      <!-- Lockup: PROGRAMA / TRAINEE / DIAMANTE ENERGIA -->
+      <h1 class="text-white">
+        <span class="hero-kicker block">Programa</span>
+        <img
+          src="/images/logo-trainee.webp"
+          alt="Trainee"
+          width="440"
+          height="102"
+          fetchpriority="high"
+          class="trainee-mark max-w-[326px] lg:max-w-[440px]"
+        />
+        <span class="hero-kicker-strong block">Diamante Energia</span>
+      </h1>
+
+      <p class="mt-8 text-lg/[1.2] font-bold text-white lg:mt-10 lg:text-xl/[1.2]">
+        Lidere a energia que move o futuro!
+      </p>
+      <p class="mt-4 text-base/[1.2] text-white lg:text-lg/[1.2]">
+        Desenvolva a sua carreira em uma operação estratégica para o futuro da
+        energia.
+      </p>
+
+      <Button href={APPLY_URL} variant="hero" class="mt-10">
+        Inscreva-se agora
+      </Button>
+    </div>
+
+    <!-- Cards de destaque -->
+    <ul
+      class="relative z-10 mt-8 flex flex-col gap-6 lg:mt-0 lg:w-[282px] lg:shrink-0 lg:self-end lg:pb-20"
+    >
+      {
+        HIGHLIGHTS.map((item) => (
+          <li>
+            <HighlightCard label={item.label} value={item.value} size={item.size ?? "md"} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- Foto principal: encerra a seção no mobile; absoluta no desktop -->
+  <div
+    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden lg:absolute lg:bottom-0 lg:left-[calc(50%+34px)] lg:mt-0 lg:h-[591px] lg:w-[418px] lg:-translate-x-1/2"
+  >
+    <img
+      src="/images/hero-photo.webp"
+      srcset="/images/hero-photo-sm.webp 640w, /images/hero-photo.webp 1125w"
+      sizes="(min-width: 1024px) 418px, 300px"
+      alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
+      width="418"
+      height="591"
+      fetchpriority="high"
+      class="size-full scale-[1.15] object-cover object-top"
+    />
+  </div>
+</section>

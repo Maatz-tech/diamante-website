@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import BrandBar from '../components/BrandBar.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
+import ProgramSection from '../components/sections/ProgramSection.astro';
+import SkillsSection from '../components/sections/SkillsSection.astro';
+import RequirementsSection from '../components/sections/RequirementsSection.astro';
+import BenefitsSection from '../components/sections/BenefitsSection.astro';
+import StepsSection from '../components/sections/StepsSection.astro';
+import CultureSection from '../components/sections/CultureSection.astro';
+import FaqSection from '../components/sections/FaqSection.astro';
+---
+
+<Base>
+  <Header />
+
+  <main id="main">
+    <HeroSection />
+    <BrandBar height={8} />
+    <AboutSection />
+    <ProgramSection />
+    <SkillsSection />
+    <RequirementsSection />
+    <BenefitsSection />
+    <StepsSection />
+    <CultureSection />
+    <FaqSection />
+  </main>
+
+  <Footer />
+</Base>

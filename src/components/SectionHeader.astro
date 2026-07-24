@@ -1,0 +1,30 @@
+---
+interface Props {
+  /** Texto da pill acima do título. */
+  eyebrow: string;
+  /** Título da seção. Use `highlight` para sublinhar a palavra final. */
+  title: string;
+  /** Trecho final do título que recebe o sublinhado laranja. */
+  highlight?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  highlight,
+  align = 'left',
+  class: className = '',
+} = Astro.props;
+
+const alignClass = align === 'center' ? 'items-center text-center' : 'items-start';
+---
+
+<div class={`flex flex-col gap-4 ${alignClass} ${className}`}>
+  <p class="eyebrow-pill">{eyebrow}</p>
+  <h2 class="h2">
+    {title}
+    {highlight && <span class="underline-brand">{highlight}</span>}
+  </h2>
+</div>

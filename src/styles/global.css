@@ -1,0 +1,528 @@
+@import "tailwindcss";
+
+/* ============================================================
+   FONTE — Montserrat self-hosted
+   Servida localmente em vez do Google Fonts: elimina o CSS externo
+   render-blocking e duas conexões de terceiros. O `unicode-range` faz o
+   browser baixar só o subset `latin` (~35 KB por peso) em português.
+   ============================================================ */
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/montserrat-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/montserrat-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/montserrat-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/montserrat-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/montserrat-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/montserrat-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/montserrat-900-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/montserrat-900-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ============================================================
+   DESIGN TOKENS — LP Diamante Energia
+   Fonte de verdade: Figma 3kVFxWwAxhHVmC9xAHZJEE
+   ============================================================ */
+
+@theme {
+  /* ---------- Brand ---------- */
+  --color-orange: #de7128;        /* brand/orange   — base do gradiente */
+  --color-orange-bright: #fa721a; /* brand/orange-hex — topo do gradiente */
+  --color-blue: #2039f9;          /* brand/blue     — CTA primário */
+  --color-blue-light: #69bafc;    /* brand/blue-2   — acentos */
+  --color-yellow: #e9af29;        /* brand/yellow   — acentos */
+
+  /* Laranja escurecido só para TEXTO pequeno sobre fundos claros.
+     O #fa721a do Figma rende 2.5:1 na pill do eyebrow e reprova no WCAG AA;
+     este tom mantém a identidade e alcança 4.9:1. Ver dev-todo-list. */
+  --color-orange-text: #a34f05;
+
+  /* ---------- Neutros ---------- */
+  --color-navy: #15296d;          /* texto sobre cards claros */
+  --color-stone: #4d4b46;         /* Primary/Stone — body copy */
+  --color-off-white: #f9f9fb;     /* fundo de cards */
+  --color-mute: #d9d9de;          /* divisores */
+
+  /* ---------- Camadas sobre fundo laranja ---------- */
+  --color-on-brand-80: rgba(255, 255, 255, 0.8);
+  --color-on-brand-60: rgba(255, 255, 255, 0.6);
+  --color-on-brand-20: rgba(255, 255, 255, 0.2);
+  --color-on-brand-10: rgba(255, 255, 255, 0.1);
+
+  /* ---------- Tipografia ----------
+     Design usa Gotham (Book 400 / Medium 500 / Bold 700 / Black 900).
+     Gotham é licenciada (Hoefler&Co) — ver dev-todo-list.md.
+     Montserrat é o fallback geométrico mais próximo. */
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ---------- Raios ---------- */
+  --radius-btn: 12px;
+  --radius-card: 24px;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+@layer base {
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  color: var(--color-stone);
+  background-color: #ffffff;
+  /* Nenhuma seção deve provocar rolagem horizontal (clip preserva position:sticky) */
+  overflow-x: clip;
+}
+
+/* Foco visível consistente — nunca remover sem substituir */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+}
+
+/* ============================================================
+   COMPONENTES
+   Em @layer components para que as utilities do Tailwind
+   (hidden, text-xl, w-full…) possam sobrescrever quando preciso.
+   ============================================================ */
+
+@layer components {
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--color-blue);
+  color: #fff;
+  font-weight: 500;
+  border-radius: 0 0 var(--radius-btn) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ============================================================
+   TIPOGRAFIA SEMÂNTICA
+   ============================================================ */
+
+/* Sobrelinha do hero: "Programa" / "DIAMANTE ENERGIA" */
+.hero-kicker {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.hero-kicker-strong {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* Imagem do lockup TRAINEE: o Figma a comprime verticalmente (440×102
+   sobre um asset 1018×450), então usamos dimensões explícitas. */
+.trainee-mark {
+  display: block;
+  width: 100%;
+  height: 76px;
+  object-fit: fill;
+  /* O capelo ocupa a faixa transparente superior do asset; o Figma
+     sobrepõe a imagem ao texto "PROGRAMA" — replicado com margem negativa. */
+  margin-top: -12px;
+}
+.trainee-mark + .hero-kicker-strong {
+  margin-top: 6px;
+}
+
+/* Eyebrow das seções — pill lilás com texto azul acima do H2.
+   #2039f9 sobre #e3e6fb = 5,6:1 (passa WCAG AA). */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 4px 16px;
+  border-radius: 20px;
+  background-color: #e3e6fb;
+  color: var(--color-blue);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* Sublinhado laranja usado na palavra de destaque dos títulos */
+.underline-brand {
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange-bright);
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.08em;
+}
+
+.h1 {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.h2 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+
+.h3 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--color-navy);
+}
+
+.h4 {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-navy);
+}
+
+.body-lg {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.body {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.body-sm {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Escala desktop */
+@media (min-width: 1024px) {
+  .hero-kicker,
+  .hero-kicker-strong {
+    font-size: 32px;
+  }
+  .trainee-mark {
+    height: 102px;
+    margin-top: -16px;
+  }
+  .trainee-mark + .hero-kicker-strong {
+    margin-top: 8px;
+  }
+  .h1 {
+    font-size: 20px;
+  }
+  .h2 {
+    font-size: 32px;
+  }
+  .h3 {
+    font-size: 20px;
+  }
+  .h4 {
+    font-size: 18px;
+  }
+  .body-lg {
+    font-size: 18px;
+  }
+  .body {
+    font-size: 16px;
+  }
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 14px 24px;
+  border-radius: var(--radius-btn);
+  text-align: center;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    transform 150ms ease,
+    box-shadow 200ms ease;
+}
+
+@media (min-width: 1024px) {
+  .btn {
+    font-size: 18px;
+  }
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Primário — azul sobre qualquer fundo */
+.btn-primary {
+  background-color: var(--color-blue);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background-color: #182ecc;
+  box-shadow: 0 6px 20px rgba(32, 57, 249, 0.28);
+}
+
+/* Secundário — laranja, para uso sobre fundo claro */
+.btn-secondary {
+  background-color: var(--color-orange);
+  color: #ffffff;
+}
+.btn-secondary:hover {
+  background-color: #c66022;
+  box-shadow: 0 6px 20px rgba(222, 113, 40, 0.28);
+}
+
+/* Outline — sobre fundo claro */
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-blue);
+  border: 2px solid var(--color-blue);
+}
+.btn-outline:hover {
+  background-color: var(--color-blue);
+  color: #ffffff;
+}
+
+/* Ghost sobre fundo laranja */
+.btn-on-brand {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid var(--color-on-brand-60);
+}
+.btn-on-brand:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+}
+
+/* Amarelo — CTA sobre o fundo azul do hero/header */
+.btn-hero {
+  background-color: var(--color-yellow);
+  color: #000929;
+}
+.btn-hero:hover {
+  background-color: #d69c1f;
+  box-shadow: 0 6px 20px rgba(233, 175, 41, 0.32);
+}
+
+/* ============================================================
+   SUPERFÍCIES
+   ============================================================ */
+
+.card {
+  background-color: var(--color-off-white);
+  border-radius: var(--radius-card);
+}
+
+/* Container padrão do layout */
+.container-page {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (min-width: 1024px) {
+  .container-page {
+    padding-inline: 120px;
+  }
+}
+
+/* Gradiente azul do hero e do menu mobile */
+.bg-hero-gradient {
+  background-image: linear-gradient(180deg, #2039f9 0%, #0000d6 100%);
+}
+
+/* Gradiente dourado da seção Benefícios */
+.bg-benefits-gradient {
+  background-image: linear-gradient(180deg, #e9af29 0%, #faa41a 100%);
+}
+
+}
+
+/* ============================================================
+   ANIMAÇÕES DE ENTRADA
+
+   Duas salvaguardas para nada ficar invisível:
+   1. `data-reveal` e `data-typing` só são aplicados por JS (sem JS, nada some);
+   2. todo este bloco vive dentro de `prefers-reduced-motion: no-preference` —
+      `data-reveal-img` e `data-pop` vêm no HTML, então sem este guard eles
+      ficariam com opacity:0 para sempre em quem pediu menos movimento.
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+/* Reveal: sobe suave saindo de um desfoque */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(12px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform, filter;
+}
+
+/* Dentro do carrossel o translateY criaria rolagem vertical no track */
+[data-carousel-track] [data-reveal] {
+  transform: none;
+}
+
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  will-change: auto;
+}
+
+/* Títulos: cada palavra entra em sequência */
+[data-typing] .tw {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.28em);
+  filter: blur(10px);
+  transition:
+    opacity 0.42s ease,
+    transform 0.42s ease,
+    filter 0.42s ease;
+  transition-delay: calc(var(--wi, 0) * 55ms);
+  will-change: opacity, transform, filter;
+}
+[data-typing].is-in .tw {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  will-change: auto;
+}
+
+/* Imagens revelam com um leve zoom-out */
+[data-reveal-img] {
+  opacity: 0;
+  transform: scale(1.04);
+  filter: blur(10px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+[data-reveal-img].is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Badges numeradas das etapas: entram com um "pop" */
+[data-pop] {
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+[data-pop].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+}

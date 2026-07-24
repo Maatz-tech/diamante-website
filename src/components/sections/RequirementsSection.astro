@@ -1,0 +1,49 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { REQUIREMENTS, APPLY_URL } from '../../data/site';
+---
+
+<section id="requisitos" class="bg-off-white">
+  <div
+    class="container-page flex flex-col gap-8 py-16 lg:flex-row lg:items-center lg:gap-12 lg:py-20"
+  >
+    <!-- Coluna de texto -->
+    <!-- 440px (Figma: 424) para o H2 caber em 2 linhas com Montserrat, que é mais
+         larga que a Gotham do design — "nossos próximos trainees" pede 426px -->
+    <div class="flex flex-col gap-6 lg:w-[440px] lg:shrink-0 lg:gap-10">
+      <div class="flex flex-col gap-6">
+        <SectionHeader
+          eyebrow="Requisitos"
+          title="O que buscamos nos nossos próximos trainees"
+        />
+        <p class="text-base/[1.3] text-[#3c3c42]">
+          Buscamos recém-formados que queiram aprender, assumir desafios e
+          construir uma carreira de longo prazo em uma empresa estratégica para o
+          setor de energia.
+        </p>
+      </div>
+
+      <Button href={APPLY_URL} class="self-start">Inscreva-se agora</Button>
+    </div>
+
+    <!-- Grid de requisitos -->
+    <ul class="grid gap-6 lg:min-w-0 lg:flex-1 lg:grid-cols-2">
+      {
+        REQUIREMENTS.map((item) => (
+          <li data-card class="flex items-center gap-6 rounded-3xl bg-white p-6">
+            <span class="shrink-0 text-blue">
+              <Icon name={item.icon} class="size-8" />
+            </span>
+            <p class="text-lg/[1.3] text-[#3c3c42]">
+              {item.parts.map(([text, bold]) =>
+                bold ? <strong class="font-bold">{text}</strong> : <span>{text}</span>
+              )}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

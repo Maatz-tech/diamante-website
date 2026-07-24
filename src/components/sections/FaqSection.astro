@@ -1,0 +1,203 @@
+---
+import { FAQ, APPLY_URL } from '../../data/site';
+---
+
+<section id="faq" class="bg-off-white">
+  <div
+    class="container-page flex flex-col gap-8 py-16 lg:flex-row lg:items-start lg:gap-20 lg:py-20"
+  >
+    <!-- Coluna esquerda: título + imagem com CTA -->
+    <div class="flex flex-col gap-6 lg:h-[487px] lg:w-[348px] lg:shrink-0 lg:gap-10">
+      <h2 class="h2">Perguntas frequentes</h2>
+
+      <a
+        href={APPLY_URL}
+        class="group relative isolate hidden flex-1 overflow-hidden rounded-3xl lg:block"
+      >
+        <img
+          src="/images/faq.webp"
+          data-reveal-img
+          alt="Profissionais da Diamante Energia"
+          width="348"
+          height="380"
+          loading="lazy"
+          class="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <span
+          class="absolute inset-x-0 bottom-0 flex items-center justify-between bg-blue px-6 py-4 text-xl font-medium text-white"
+        >
+          Inscreva-se agora
+          <svg
+            class="size-6 transition-transform group-hover:translate-x-1"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- Acordeões -->
+    <div class="flex flex-col gap-4 lg:min-w-0 lg:flex-1">
+      {
+        FAQ.map((item) => (
+          <details class="faq-item rounded-3xl bg-white p-6">
+            <summary
+              class="flex cursor-pointer list-none items-start justify-between gap-4 text-lg/[1.3] font-medium text-navy"
+            >
+              {item.question}
+              <span class="faq-sign relative mt-0.5 flex size-6 shrink-0 items-center justify-center text-blue">
+                {/* Traço horizontal: sempre visível */}
+                <span class="absolute h-0.5 w-3.5 rounded bg-current" />
+                {/* Traço vertical: encolhe ao abrir, virando − */}
+                <span class="faq-sign-bar absolute h-3.5 w-0.5 rounded bg-current" />
+              </span>
+            </summary>
+
+            {/* wrapper de altura animável (grid 0fr -> 1fr) */}
+            <div class="faq-panel">
+              <div class="faq-panel-inner">
+                <p class="pt-4 text-base/[1.3] text-[#3c3c42]">{item.answer}</p>
+              </div>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Remove o marcador nativo do <summary> em todos os navegadores */
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary::marker {
+    content: '';
+  }
+
+  /*
+    Altura animável: o <details> nativo não transiciona de/para `auto`, então o
+    painel é um grid que vai de 0fr a 1fr. Quem comanda é `data-expanded`
+    (e não `[open]`), porque no fechamento precisamos animar ANTES de o browser
+    remover o conteúdo do fluxo — ver o script abaixo.
+  */
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .faq-panel-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .faq-item[data-expanded] .faq-panel {
+    grid-template-rows: 1fr;
+  }
+
+  /* Conteúdo acompanha com um fade sutil */
+  .faq-panel-inner > * {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.28s ease,
+      transform 0.28s ease;
+  }
+  .faq-item[data-expanded] .faq-panel-inner > * {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.06s;
+  }
+
+  /* + vira − */
+  .faq-sign-bar {
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .faq-item[data-expanded] .faq-sign-bar {
+    transform: scaleY(0);
+  }
+
+  /* Card destaca levemente quando aberto */
+  .faq-item {
+    transition: box-shadow 0.3s ease;
+  }
+  .faq-item[data-expanded] {
+    box-shadow: 0 10px 30px rgba(21, 41, 109, 0.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-panel,
+    .faq-panel-inner > *,
+    .faq-sign-bar,
+    .faq-item {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const items = Array.from(
+    document.querySelectorAll<HTMLDetailsElement>('.faq-item')
+  );
+
+  const DURATION = 340;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /** Abre: mostra o conteúdo e só então dispara a transição de altura. */
+  const open = (d: HTMLDetailsElement) => {
+    d.open = true;
+    if (reduced) {
+      d.setAttribute('data-expanded', '');
+      return;
+    }
+    // dois frames: garante que o layout com 0fr foi aplicado antes de ir a 1fr
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => d.setAttribute('data-expanded', ''))
+    );
+  };
+
+  /** Fecha: anima até 0fr e só depois remove o `open`. */
+  const close = (d: HTMLDetailsElement) => {
+    if (reduced) {
+      d.removeAttribute('data-expanded');
+      d.open = false;
+      return;
+    }
+    d.removeAttribute('data-expanded');
+    window.clearTimeout(Number(d.dataset.timer));
+    d.dataset.timer = String(
+      window.setTimeout(() => {
+        d.open = false;
+        delete d.dataset.timer;
+      }, DURATION)
+    );
+  };
+
+  items.forEach((d) => {
+    const summary = d.querySelector('summary');
+    summary?.addEventListener('click', (e) => {
+      // assume o controle para poder animar os dois sentidos
+      e.preventDefault();
+
+      const isOpen = d.hasAttribute('data-expanded');
+      // acordeão exclusivo: fecha os demais com a mesma animação
+      items.forEach((other) => {
+        if (other !== d && other.hasAttribute('data-expanded')) close(other);
+      });
+
+      if (isOpen) {
+        close(d);
+      } else {
+        window.clearTimeout(Number(d.dataset.timer));
+        delete d.dataset.timer;
+        open(d);
+      }
+    });
+  });
+</script>

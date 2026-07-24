@@ -1,0 +1,254 @@
+---
+import '../styles/global.css';
+import { SITE } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  ogImage = SITE.ogImage,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImageUrl = new URL(ogImage, SITE.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: 'Programa de Trainee Diamante Energia',
+  description: SITE.description,
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: 'Diamante Energia',
+    url: SITE.url,
+  },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Capivari de Baixo',
+      addressRegion: 'SC',
+      addressCountry: 'BR',
+    },
+  },
+  employmentType: 'FULL_TIME',
+  validThrough: '2026-08-17',
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Programa Trainee Diamante Energia — inscrições até 17/08/2026"
+    />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Diamante Energia" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta
+      name="twitter:image:alt"
+      content="Programa Trainee Diamante Energia — inscrições até 17/08/2026"
+    />
+
+    <!-- Ícones -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#de7128" />
+
+    <!--
+      Fonte self-hosted (ver @font-face em global.css). Só os dois pesos usados
+      acima da dobra entram em preload — os demais carregam sob demanda.
+    -->
+    <link
+      rel="preload"
+      href="/fonts/montserrat-400-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/montserrat-700-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(jsonLd)}
+    />
+  </head>
+
+  <body class="min-h-screen bg-white">
+    <a href="#main" class="skip-link">Ir para o conteúdo</a>
+    <slot />
+
+    <script>
+      // Animações de entrada. Progressive enhancement: os atributos só são
+      // aplicados aqui, então sem JS (ou com "reduzir movimento") a página
+      // aparece inteira, sem nada oculto.
+      const reduced = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+
+      if (!reduced) {
+        /** Quebra o texto em <span class="tw"> preservando elementos internos. */
+        const splitWords = (el: Element) => {
+          const walk = (node: Node) => {
+            [...node.childNodes].forEach((child) => {
+              if (child.nodeType === Node.TEXT_NODE) {
+                const parts = (child.textContent ?? '').split(/(\s+)/);
+                const frag = document.createDocumentFragment();
+                parts.forEach((part) => {
+                  if (!part) return;
+                  if (/^\s+$/.test(part)) {
+                    frag.appendChild(document.createTextNode(part));
+                  } else {
+                    const w = document.createElement('span');
+                    w.className = 'tw';
+                    w.textContent = part;
+                    frag.appendChild(w);
+                  }
+                });
+                child.replaceWith(frag);
+              } else if (child.nodeType === Node.ELEMENT_NODE) {
+                walk(child);
+              }
+            });
+          };
+          walk(el);
+          return el.querySelectorAll<HTMLElement>('.tw');
+        };
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-in');
+              io.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+        );
+
+        const prep = () => {
+          // 1. Títulos — palavra a palavra
+          document
+            .querySelectorAll<HTMLElement>('main h1, main h2')
+            .forEach((h) => {
+              h.setAttribute('data-typing', '');
+              splitWords(h).forEach((w, i) =>
+                w.style.setProperty('--wi', String(i))
+              );
+              io.observe(h);
+            });
+
+          // 2. Cards e blocos — escalonados dentro de cada seção
+          let currentSection: Element | null = null;
+          let index = 0;
+          document
+            .querySelectorAll<HTMLElement>('main [data-card], main details')
+            .forEach((el) => {
+              // evita animar um card dentro de outro que já anima
+              if (el.parentElement?.closest('[data-reveal]')) return;
+              const section = el.closest('section');
+              if (section !== currentSection) {
+                currentSection = section;
+                index = 0;
+              }
+              el.setAttribute('data-reveal', '');
+              el.style.setProperty(
+                '--reveal-delay',
+                `${Math.min(index * 70, 420)}ms`
+              );
+              index++;
+              io.observe(el);
+            });
+
+          // 3. Imagens de conteúdo — leve zoom-out.
+          // Elementos ocultos no breakpoint atual (ex.: a imagem do FAQ, que é
+          // hidden no mobile) nunca cruzariam a viewport e ficariam presos
+          // invisíveis — nesses casos o atributo é removido.
+          document
+            .querySelectorAll<HTMLElement>('main [data-reveal-img]')
+            .forEach((el) => {
+              if (el.offsetParent === null) {
+                el.removeAttribute('data-reveal-img');
+                return;
+              }
+              io.observe(el);
+            });
+
+          // 4. Badges numeradas das etapas — "pop" em sequência
+          document
+            .querySelectorAll<HTMLElement>('main [data-pop]')
+            .forEach((el, i) => {
+              el.style.setProperty('--reveal-delay', `${120 + i * 90}ms`);
+              io.observe(el);
+            });
+
+          // 5. Carrossel horizontal: os cards à direita estão fora da tela e
+          // nunca cruzariam a viewport. Quando o track aparece, revela todos
+          // em sequência — assim nenhum card fica preso invisível caso o
+          // usuário não arraste.
+          document
+            .querySelectorAll<HTMLElement>('[data-carousel-track]')
+            .forEach((track) => {
+              const cards = track.querySelectorAll<HTMLElement>('[data-reveal]');
+              const trackIo = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    cards.forEach((el, i) => {
+                      el.style.setProperty('--reveal-delay', `${i * 90}ms`);
+                      el.classList.add('is-in');
+                      io.unobserve(el);
+                    });
+                    trackIo.disconnect();
+                  });
+                },
+                { threshold: 0.1 }
+              );
+              trackIo.observe(track);
+            });
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', prep);
+        } else {
+          prep();
+        }
+      }
+    </script>
+  </body>
+</html>

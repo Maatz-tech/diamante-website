@@ -1,0 +1,76 @@
+---
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { BENEFITS, APPLY_URL } from '../../data/site';
+---
+
+<section
+  id="beneficios"
+  class="bg-benefits-gradient relative isolate overflow-hidden"
+>
+  <!-- Decorações de fundo (mesmas do hero) -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <img
+      src="/images/line-shape.webp"
+      alt=""
+      width="2048"
+      height="1430"
+      loading="lazy"
+      class="absolute -left-[877px] -top-[378px] w-[2515px] max-w-none opacity-30"
+    />
+    <img
+      src="/images/line-shape.webp"
+      alt=""
+      width="2048"
+      height="1430"
+      loading="lazy"
+      class="absolute -top-[364px] left-[212px] w-[2515px] max-w-none -scale-y-100 opacity-30"
+    />
+    <img
+      src="/images/texture.webp"
+      alt=""
+      width="480"
+      height="600"
+      loading="lazy"
+      class="absolute inset-0 size-full object-cover opacity-10 mix-blend-soft-light"
+    />
+  </div>
+
+  <div
+    class="container-page flex flex-col items-start gap-8 py-16 lg:items-center lg:gap-12 lg:py-20"
+  >
+    <!-- mobile alinha à esquerda; desktop centraliza (como no Figma) -->
+    <div class="flex flex-col items-start gap-4 lg:items-center lg:text-center">
+      <p class="eyebrow-pill">Benefícios</p>
+      <h2 class="h2 text-white lg:max-w-[830px]">
+        Tudo o que você vai receber ao construir a sua carreira na Diamante
+        Energia
+      </h2>
+    </div>
+
+    <!-- mobile: cards empilhados em largura total · desktop: wrap centralizado -->
+    <ul class="grid w-full gap-4 lg:flex lg:w-auto lg:flex-wrap lg:justify-center lg:gap-6">
+      {
+        BENEFITS.map((benefit) => (
+          <li data-card class="card flex items-center gap-4 p-5 lg:gap-5 lg:p-6">
+            <span
+              class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue text-white lg:size-[54px]"
+            >
+              <Icon name={benefit.icon} class="size-5 lg:size-6" />
+            </span>
+            <div class="flex flex-col gap-0.5 text-[#3c3c42] lg:gap-1">
+              <h3
+                class={`text-lg/[1.2] font-medium ${benefit.note ? 'lg:text-2xl/[1.2]' : 'lg:text-xl/[1.2]'}`}
+              >
+                {benefit.title}
+              </h3>
+              {benefit.note && <p class="text-sm/[1.2] lg:text-base/[1.2]">{benefit.note}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <Button href={APPLY_URL} class="self-start lg:self-auto">Inscreva-se agora</Button>
+  </div>
+</section>

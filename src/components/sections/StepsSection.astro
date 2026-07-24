@@ -1,0 +1,76 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+import { STEPS } from '../../data/site';
+---
+
+<section id="etapas" class="relative isolate overflow-hidden bg-off-white">
+  <!-- Onda decorativa que liga as etapas (apenas desktop) -->
+  <img
+    src="/images/wave.svg"
+    alt=""
+    width="1477"
+    height="176"
+    aria-hidden="true"
+    loading="lazy"
+    class="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[1477px] max-w-none -translate-x-1/2 translate-y-[calc(-50%+72px)] lg:block"
+  />
+
+  <div
+    class="container-page relative z-10 flex flex-col items-center gap-10 py-16 lg:gap-16 lg:py-20"
+  >
+    <SectionHeader
+      eyebrow="Etapas do Processo Seletivo"
+      title="Sua jornada começa aqui"
+      align="center"
+    />
+
+    <ol
+      class="grid w-full gap-9 lg:w-[1086px] lg:grid-cols-3 lg:gap-x-20 lg:gap-y-20"
+    >
+      {
+        STEPS.map((step, index) => (
+          <li data-card class="relative flex flex-col items-center justify-center gap-4 rounded-2xl border border-blue bg-white px-5 py-5 text-center lg:items-start lg:gap-[26px] lg:py-6 lg:pl-9 lg:pr-4 lg:text-left">
+            {/* Badge numerada: topo no mobile, lateral esquerda no desktop */}
+            <span
+              data-pop
+              class="absolute -top-7 left-1/2 flex size-14 -translate-x-1/2 items-center justify-center rounded-full bg-[rgba(32,57,249,0.1)] lg:left-0 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
+            >
+              <span
+                class="flex size-11 items-center justify-center rounded-full bg-blue text-2xl font-medium text-white"
+              >
+                {index + 1}
+              </span>
+            </span>
+
+            <div class="mt-3 flex flex-col gap-2 lg:mt-0">
+              <p class="text-base/[1.2] text-[#3c3c42]">{step.title}</p>
+              <p class="text-base/[1.2] font-medium uppercase text-navy">
+                {step.date}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* Linha vertical que conecta as etapas no mobile */
+  @media (max-width: 1023px) {
+    ol {
+      position: relative;
+    }
+    ol::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      background: rgba(32, 57, 249, 0.2);
+      z-index: -1;
+    }
+  }
+</style>

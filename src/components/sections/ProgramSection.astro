@@ -1,0 +1,44 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+---
+
+<section id="o-programa" class="bg-off-white">
+  <div class="container-page flex flex-col gap-8 py-16 lg:gap-12 lg:py-20">
+    <SectionHeader
+      eyebrow="O Programa"
+      title="Mais do que acelerar sua carreira, queremos preparar você para compreender os desafios da operação, contribuir com soluções e crescer junto com a empresa."
+      align="center"
+      class="lg:mx-auto lg:max-w-[1010px]"
+    />
+
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-stretch">
+      <div class="lg:relative lg:min-h-px lg:flex-1">
+        <img
+          src="/images/programa.webp"
+          data-reveal-img
+          srcset="/images/programa-sm.webp 680w, /images/programa.webp 1200w"
+          sizes="(min-width: 1024px) 588px, 327px"
+          alt="Equipe da Diamante Energia em atividade na operação"
+          width="588"
+          height="268"
+          loading="lazy"
+          class="h-[184px] w-full rounded-3xl object-cover lg:absolute lg:inset-0 lg:h-full"
+        />
+      </div>
+
+      <div class="flex flex-col gap-6 lg:flex-1">
+        <p class="rounded-2xl bg-blue p-6 text-xl/[1.3] text-white">
+          O <strong class="font-bold">Programa Trainee Diamante Energia</strong>
+          foi criado para formar profissionais preparados para assumir futuras
+          posições de liderança.
+        </p>
+        <p class="rounded-3xl bg-white p-6 text-base/[1.3] text-[#3c3c42]">
+          Ao longo da jornada, você terá contato com diferentes áreas da
+          operação, ampliando sua visão sistêmica do negócio e desenvolvendo
+          competências técnicas e comportamentais em um ambiente de aprendizado
+          constante.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

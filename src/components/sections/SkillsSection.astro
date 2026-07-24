@@ -1,0 +1,87 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+import FeatureCard from '../FeatureCard.astro';
+import Button from '../Button.astro';
+import { SKILLS, APPLY_URL } from '../../data/site';
+---
+
+<section id="desenvolvimento" class="bg-white">
+  <div
+    class="flex flex-col items-center gap-8 py-16 lg:gap-12 lg:py-20"
+  >
+    <SectionHeader
+      eyebrow="A Diamante Energia"
+      title="O que você vai desenvolver"
+      align="center"
+      class="container-page"
+    />
+
+    <!-- Carrossel no mobile (scroll-snap), grid no desktop -->
+    <!-- tabindex=0 dá acesso por teclado à área rolável no mobile (setas ←/→) -->
+    <ul
+      id="skills-track"
+      data-carousel-track
+      tabindex="0"
+      aria-label="Competências desenvolvidas no programa"
+      class="flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 lg:grid lg:grid-cols-4 lg:items-stretch lg:overflow-visible lg:px-[120px] lg:pb-0"
+    >
+      {
+        SKILLS.map((skill) => (
+          <li class="w-[calc(100%-3rem)] shrink-0 snap-center lg:w-auto">
+            <FeatureCard
+              icon={skill.icon}
+              title={skill.title}
+              description={skill.description}
+            />
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Indicadores do carrossel (apenas mobile) -->
+    <ul id="skills-dots" class="flex gap-2 lg:hidden" aria-hidden="true">
+      {
+        SKILLS.map(() => (
+          <li class="size-2.5 rounded-full bg-mute transition-colors" />
+        ))
+      }
+    </ul>
+
+    <Button href={APPLY_URL}>Inscreva-se agora</Button>
+  </div>
+</section>
+
+<style>
+  #skills-track {
+    scrollbar-width: none;
+  }
+  #skills-track::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  const track = document.getElementById('skills-track');
+  const dots = document.getElementById('skills-dots');
+
+  if (track && dots) {
+    const items = Array.from(track.children);
+    const marks = Array.from(dots.children);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const index = items.indexOf(entry.target);
+          marks.forEach((mark, i) => {
+            mark.classList.toggle('bg-blue', i === index);
+            mark.classList.toggle('bg-mute', i !== index);
+          });
+        });
+      },
+      { root: track, threshold: 0.6 }
+    );
+
+    items.forEach((item) => observer.observe(item));
+  }
+</script>

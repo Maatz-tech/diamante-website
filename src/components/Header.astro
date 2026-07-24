@@ -1,0 +1,189 @@
+---
+import { NAV_LINKS, APPLY_URL } from '../data/site';
+import MenuIcon from './icons/MenuIcon.astro';
+import CloseIcon from './icons/CloseIcon.astro';
+import Button from './Button.astro';
+---
+
+<header class="absolute inset-x-0 top-0 z-50">
+  <div class="container-page flex items-center justify-between py-4 lg:py-6">
+    <!-- Logo -->
+    <a href="#topo" aria-label="Diamante Energia — início" class="shrink-0">
+      <img
+        src="/images/logo-diamante-branco.webp"
+        alt="Diamante Energia"
+        width="190"
+        height="48"
+        fetchpriority="high"
+        class="h-10 w-auto lg:h-12"
+      />
+    </a>
+
+    <!-- Nav desktop -->
+    <nav aria-label="Navegação principal" class="hidden lg:block">
+      <ul class="flex items-center gap-10">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="nav-link text-base font-medium text-white transition-opacity hover:opacity-70"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- CTA desktop -->
+    <Button href={APPLY_URL} variant="hero" class="hidden lg:inline-flex">
+      Inscreva-se agora
+    </Button>
+
+    <!-- Toggle mobile -->
+    <button
+      id="menu-toggle"
+      type="button"
+      class="flex size-10 items-center justify-center text-white lg:hidden"
+      aria-label="Abrir menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <MenuIcon class="size-6" />
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div
+    id="mobile-menu"
+    class="bg-hero-gradient fixed inset-0 z-50 hidden flex-col lg:hidden"
+  >
+    <div class="container-page flex items-center justify-between py-4">
+      <img
+        src="/images/logo-diamante-branco.webp"
+        alt="Diamante Energia"
+        width="190"
+        height="48"
+        class="h-10 w-auto"
+      />
+      <button
+        id="menu-close"
+        type="button"
+        class="flex size-10 items-center justify-center text-white"
+        aria-label="Fechar menu"
+      >
+        <CloseIcon class="size-6" />
+      </button>
+    </div>
+
+    <nav aria-label="Navegação principal (mobile)" class="container-page mt-6">
+      <ul class="flex flex-col gap-1">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="block rounded-xl px-3 py-4 text-lg font-medium text-white transition-colors hover:bg-white/10"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <Button href={APPLY_URL} variant="hero" block class="mt-8">
+        Inscreva-se agora
+      </Button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Sublinhado animado no hover/foco dos links do desktop */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .nav-link[aria-current='true']::after {
+    transform: scaleX(1);
+  }
+
+  /* Exibe o menu mobile quando aberto */
+  #mobile-menu.is-open {
+    display: flex;
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const closeBtn = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  const openMenu = () => {
+    menu?.classList.add('is-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    menu?.querySelector('a')?.focus();
+  };
+
+  const closeMenu = () => {
+    menu?.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    toggle?.focus();
+  };
+
+  toggle?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+
+  // Fecha ao clicar em qualquer link do menu
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Fecha com Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('is-open')) closeMenu();
+  });
+
+  // Marca o link da seção visível como atual
+  const sections = Array.from(document.querySelectorAll('main section[id]'));
+  const navLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.nav-link')
+  );
+
+  if (sections.length && navLinks.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const id = `#${entry.target.id}`;
+          navLinks.forEach((link) => {
+            link.setAttribute(
+              'aria-current',
+              link.getAttribute('href') === id ? 'true' : 'false'
+            );
+          });
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>

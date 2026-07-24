@@ -1,0 +1,37 @@
+---
+/**
+ * Renderiza um SVG de `src/assets/icons` inline, herdando a cor via
+ * `currentColor`. Mantém os ícones fora do HTML das seções (regra do PLAYBOOK).
+ */
+const icons = import.meta.glob<string>('../assets/icons/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+
+interface Props {
+  /** Nome do arquivo sem extensão, ex.: "eye". */
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = 'size-6' } = Astro.props;
+
+const entry = Object.entries(icons).find(([path]) =>
+  path.endsWith(`/${name}.svg`)
+);
+
+if (!entry) {
+  throw new Error(
+    `Icon "${name}" não encontrado em src/assets/icons. Disponíveis: ${Object.keys(
+      icons
+    )
+      .map((p) => p.split('/').pop()?.replace('.svg', ''))
+      .join(', ')}`
+  );
+}
+
+const svg = entry[1].replace('<svg', `<svg class="${className}" aria-hidden="true"`);
+---
+
+<Fragment set:html={svg} />

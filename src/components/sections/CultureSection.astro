@@ -1,0 +1,107 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { APPLY_URL } from '../../data/site';
+---
+
+<section id="cultura" class="bg-white">
+  <div
+    class="container-page flex flex-col gap-8 py-16 lg:flex-row lg:items-center lg:gap-20 lg:py-20"
+  >
+    <!-- Texto -->
+    <div class="flex flex-col gap-6 lg:w-[500px] lg:shrink-0 lg:gap-10">
+      <SectionHeader
+        eyebrow="Nossa Cultura"
+        title="Crescer junto faz parte da nossa energia"
+      />
+
+      <div class="flex flex-col gap-4 text-base/[1.3] text-[#3c3c42]">
+        <p>
+          Na Diamante Energia, acreditamos que grandes resultados são
+          construídos por pessoas comprometidas, curiosas e dispostas a aprender
+          continuamente.
+        </p>
+        <p>
+          Nossa cultura valoriza a segurança, a excelência técnica, a
+          colaboração e o desenvolvimento de pessoas. Aqui, cada desafio
+          representa uma oportunidade de crescimento e cada profissional
+          contribui para uma operação que impacta milhões de brasileiros.
+        </p>
+        <p>
+          Se você busca um ambiente onde possa aprender com profissionais
+          experientes, assumir responsabilidades e construir uma carreira sólida,
+          queremos conhecer você.
+        </p>
+      </div>
+
+      <Button href={APPLY_URL} class="self-start">Faça sua inscrição</Button>
+    </div>
+
+    <!-- Mosaico -->
+    <div class="flex flex-col gap-6 lg:min-w-0 lg:flex-1">
+      <div class="flex gap-6">
+        <img
+          src="/images/cultura-1.webp"
+          data-reveal-img
+          srcset="/images/cultura-1-sm.webp 440w, /images/cultura-1.webp 900w"
+          sizes="(min-width: 1024px) 429px, 208px"
+          alt="Equipe da Diamante Energia trabalhando em conjunto"
+          width="429"
+          height="241"
+          loading="lazy"
+          class="h-[117px] w-[63%] rounded-3xl object-cover lg:h-[241px] lg:w-[429px] lg:shrink-0"
+        />
+        <div
+          class="relative isolate flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-blue p-6 text-white"
+        >
+          <img
+            src="/images/texture.webp"
+            alt=""
+            width="480"
+            height="600"
+            aria-hidden="true"
+            loading="lazy"
+            class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07]"
+          />
+          <Icon name="bolt" class="size-12 lg:size-20" />
+        </div>
+      </div>
+
+      <div class="flex gap-6">
+        <div
+          class="relative isolate flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-orange-bright p-6"
+        >
+          <img
+            src="/images/texture.webp"
+            alt=""
+            width="480"
+            height="600"
+            aria-hidden="true"
+            loading="lazy"
+            class="absolute inset-0 -z-10 size-full object-cover opacity-[0.10]"
+          />
+          <img
+            src="/images/logo-diamante.webp"
+            alt="Diamante Energia"
+            width="184"
+            height="56"
+            loading="lazy"
+            class="w-[110px] lg:w-[184px]"
+          />
+        </div>
+        <img
+          src="/images/cultura-2.webp"
+          data-reveal-img
+          srcset="/images/cultura-2-sm.webp 440w, /images/cultura-2.webp 700w"
+          sizes="(min-width: 1024px) 337px, 208px"
+          alt="Profissional da Diamante Energia em campo"
+          width="337"
+          height="189"
+          loading="lazy"
+          class="h-[117px] w-[63%] rounded-3xl object-cover lg:h-[189px] lg:w-[337px] lg:shrink-0"
+        />
+      </div>
+    </div>
+  </div>
+</section>
