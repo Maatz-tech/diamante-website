@@ -1,4 +1,4 @@
+# Site em pré-lançamento — bloqueado para buscadores.
+# Reverter para "Allow: /" + Sitemap ao publicar oficialmente.
 User-agent: *
-Allow: /
-
-Sitemap: https://diamanteenergia.com.br/sitemap-index.xml
+Disallow: /

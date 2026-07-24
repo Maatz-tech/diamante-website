@@ -64,6 +64,8 @@ const jsonLd = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <!-- Fora do ar para o público: bloqueia indexação até o lançamento. -->
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph -->
