@@ -2,76 +2,74 @@
 import { APPLY_URL, HIGHLIGHTS } from '../../data/site';
 import Button from '../Button.astro';
 import HighlightCard from '../HighlightCard.astro';
+
+const base = import.meta.env.BASE_URL;
+const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 ---
 
 <section
   id="topo"
-  class="bg-hero-gradient relative isolate overflow-hidden lg:h-[692px]"
+  class="bg-hero-gradient relative isolate overflow-hidden min-[1340px]:h-[692px]"
 >
   <!-- Decorações de fundo -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
     <img
-      src={`${import.meta.env.BASE_URL}images/line-shape.webp`}
+      src={img('images/line-shape.webp')}
       alt=""
       width="2048"
       height="1430"
       class="absolute -left-[877px] -top-[378px] w-[2515px] max-w-none opacity-30"
     />
     <img
-      src={`${import.meta.env.BASE_URL}images/line-shape.webp`}
+      src={img('images/line-shape.webp')}
       alt=""
       width="2048"
       height="1430"
       class="absolute -top-[364px] left-[212px] w-[2515px] max-w-none -scale-y-100 opacity-30"
     />
     <img
-      src={`${import.meta.env.BASE_URL}images/texture.webp`}
+      src={img('images/texture.webp')}
       alt=""
       width="480"
       height="600"
       class="absolute inset-0 size-full object-cover opacity-10 mix-blend-multiply"
     />
-    <!-- Leque dourado + curva. Desktop: lado direito. Mobile: canto inferior. -->
+    <!-- Manchas de luz radiais (sutis, como no Figma) -->
     <img
-      src={`${import.meta.env.BASE_URL}images/hero-vector3.svg`}
-      alt=""
-      width="701"
-      height="534"
-      class="absolute bottom-0 right-0 w-[78%] max-w-none lg:bottom-auto lg:left-[739px] lg:top-[162px] lg:w-[701px]"
-    />
-    <img
-      src={`${import.meta.env.BASE_URL}images/hero-vector4.svg`}
-      alt=""
-      width="735"
-      height="561"
-      class="absolute bottom-[8%] right-0 w-[82%] max-w-none lg:bottom-auto lg:left-[708px] lg:top-[138px] lg:w-[735px]"
-    />
-    <img
-      src={`${import.meta.env.BASE_URL}images/ellipse-1.svg`}
-      alt=""
-      width="702"
-      height="800"
-      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none lg:block"
-    />
-    <img
-      src={`${import.meta.env.BASE_URL}images/ellipse-2.svg`}
+      src={img('images/ellipse-2.svg')}
       alt=""
       width="702"
       height="524"
-      class="absolute -left-[412px] -top-[82px] w-[702px] max-w-none"
+      class="absolute -left-[412px] -top-[82px] w-[702px] max-w-none opacity-40"
+    />
+    <img
+      src={img('images/ellipse-1.svg')}
+      alt=""
+      width="702"
+      height="800"
+      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none opacity-40 min-[1340px]:block"
+    />
+    <!-- Leque/círculo dourado atrás da foto. Simétrico e completo: em telas
+         largas o círculo aparece inteiro (centralizado) em vez de cortar. -->
+    <img
+      src={img('images/hero-shape.svg')}
+      alt=""
+      width="1470"
+      height="562"
+      class="absolute bottom-0 left-1/2 w-[760px] max-w-none -translate-x-1/2 min-[1340px]:left-[calc(50%+34px)] min-[1340px]:w-[1470px]"
     />
   </div>
 
   <div
-    class="container-page relative flex flex-col lg:h-full lg:flex-row lg:items-start lg:justify-between"
+    class="container-page relative flex flex-col min-[1340px]:h-full min-[1340px]:flex-row min-[1340px]:items-start min-[1340px]:justify-between"
   >
     <!-- Bloco de título e CTA -->
-    <div class="pt-[120px] lg:w-[450px] lg:shrink-0 lg:pt-[178px]">
+    <div class="pt-[120px] min-[1340px]:w-[450px] min-[1340px]:shrink-0 min-[1340px]:pt-[178px]">
       <!-- Lockup: PROGRAMA / TRAINEE / DIAMANTE ENERGIA -->
       <h1 class="text-white">
         <span class="hero-kicker block">Programa</span>
         <img
-          src={`${import.meta.env.BASE_URL}images/logo-trainee.webp`}
+          src={img('images/logo-trainee.webp')}
           alt="Trainee"
           width="440"
           height="102"
@@ -96,12 +94,12 @@ import HighlightCard from '../HighlightCard.astro';
 
     <!-- Cards de destaque -->
     <ul
-      class="relative z-10 mt-8 flex flex-col gap-6 lg:mt-0 lg:w-[282px] lg:shrink-0 lg:self-end lg:pb-20"
+      class="relative z-10 mt-8 flex flex-col gap-6 min-[1340px]:mt-0 min-[1340px]:w-[282px] min-[1340px]:shrink-0 min-[1340px]:self-end min-[1340px]:pb-20"
     >
       {
         HIGHLIGHTS.map((item) => (
           <li>
-            <HighlightCard label={item.label} value={item.value} size={item.size ?? "md"} />
+            <HighlightCard label={item.label} value={item.value} />
           </li>
         ))
       }
@@ -110,12 +108,12 @@ import HighlightCard from '../HighlightCard.astro';
 
   <!-- Foto principal: encerra a seção no mobile; absoluta no desktop -->
   <div
-    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden lg:absolute lg:bottom-0 lg:left-[calc(50%+34px)] lg:mt-0 lg:h-[591px] lg:w-[418px] lg:-translate-x-1/2"
+    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden min-[1340px]:absolute min-[1340px]:bottom-0 min-[1340px]:left-[calc(50%+34px)] min-[1340px]:mt-0 min-[1340px]:h-[591px] min-[1340px]:w-[418px] min-[1340px]:-translate-x-1/2"
   >
     <img
-      src={`${import.meta.env.BASE_URL}images/hero-photo.webp`}
-      srcset={`${import.meta.env.BASE_URL}images/hero-photo-sm.webp 640w, ${import.meta.env.BASE_URL}images/hero-photo.webp 1125w`}
-      sizes="(min-width: 1024px) 418px, 300px"
+      src={img('images/hero-photo.webp')}
+      srcset={`${img('images/hero-photo-sm.webp')} 640w, ${img('images/hero-photo.webp')} 1125w`}
+      sizes="(min-width: 1340px) 418px, 300px"
       alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
       width="418"
       height="591"

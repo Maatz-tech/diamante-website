@@ -29,8 +29,7 @@ export const NAV_LINKS = [
 /** Destaques (local e prazo) — usados no hero e na seção "A empresa". */
 export const HIGHLIGHTS = [
   { label: 'Atuação presencial em', value: 'Capivari de Baixo (SC)' },
-  // o prazo aparece em corpo maior no Figma
-  { label: 'Inscrições para todo Brasil', value: 'ATÉ 17/08/2026', size: 'lg' },
+  { label: 'Inscrições para todo Brasil', value: 'Até 17/08/2026' },
 ] as const;
 
 /** Competências desenvolvidas no programa (seção "O que você vai desenvolver"). */
