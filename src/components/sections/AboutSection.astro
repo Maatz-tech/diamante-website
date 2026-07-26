@@ -52,30 +52,38 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
 
       <!-- Mídia + cards -->
       <div class="order-1 flex flex-col gap-6 lg:order-2 lg:min-w-0 lg:flex-1">
-        <button
-          type="button"
-          data-video-open
-          disabled={!hasVideo}
-          class="group relative block aspect-video w-full cursor-pointer overflow-hidden rounded-3xl disabled:cursor-default"
-          aria-label="Assistir ao vídeo institucional da Diamante Energia"
+        <!-- Player facade: o iframe do YouTube só carrega ao clicar (o vídeo
+             toca no próprio container, sem modal). -->
+        <div
+          id="video-player"
+          data-src={VIDEO_EMBED_URL}
+          class="group relative aspect-video w-full overflow-hidden rounded-3xl"
         >
-          <img
-            src={`${import.meta.env.BASE_URL}images/sobre-video.webp`}
-            data-reveal-img
-            srcset={`${import.meta.env.BASE_URL}images/sobre-video-sm.webp 680w, ${import.meta.env.BASE_URL}images/sobre-video.webp 1280w`}
-            sizes="(min-width: 1024px) 590px, 327px"
-            alt=""
-            width="1280"
-            height="720"
-            loading="lazy"
-            class="size-full object-cover"
-          />
-          <span
-            class="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(51,42,222,0.1)] text-white backdrop-blur-sm transition-transform group-hover:scale-110"
+          <button
+            type="button"
+            data-video-play
+            disabled={!hasVideo}
+            class="absolute inset-0 block cursor-pointer disabled:cursor-default"
+            aria-label="Assistir ao vídeo institucional da Diamante Energia"
           >
-            <PlayIcon class="size-8" />
-          </span>
-        </button>
+            <img
+              src={`${import.meta.env.BASE_URL}images/sobre-video.webp`}
+              data-reveal-img
+              srcset={`${import.meta.env.BASE_URL}images/sobre-video-sm.webp 680w, ${import.meta.env.BASE_URL}images/sobre-video.webp 1280w`}
+              sizes="(min-width: 1024px) 590px, 327px"
+              alt=""
+              width="1280"
+              height="720"
+              loading="lazy"
+              class="size-full object-cover"
+            />
+            <span
+              class="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(51,42,222,0.1)] text-white backdrop-blur-sm transition-transform group-hover:scale-110"
+            >
+              <PlayIcon class="size-8" />
+            </span>
+          </button>
+        </div>
 
         <ul class="grid gap-6 sm:grid-cols-2">
           {
@@ -94,133 +102,28 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
       </div>
     </div>
   </div>
-
-  {
-    hasVideo && (
-      <dialog
-        id="video-modal"
-        class="video-modal"
-        data-src={VIDEO_EMBED_URL}
-        aria-label="Vídeo institucional da Diamante Energia"
-      >
-        <div class="video-modal__inner">
-          <button
-            type="button"
-            data-video-close
-            class="video-modal__close"
-            aria-label="Fechar vídeo"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
-          </button>
-          <div class="video-modal__frame">
-            <iframe
-              title="Vídeo institucional da Diamante Energia"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            />
-          </div>
-        </div>
-      </dialog>
-    )
-  }
 </section>
 
-<style>
-  .video-modal {
-    width: min(960px, 92vw);
-    max-width: 92vw;
-    padding: 0;
-    border: none;
-    background: transparent;
-    overflow: visible;
-  }
-  .video-modal::backdrop {
-    background: rgba(0, 9, 41, 0.8);
-    backdrop-filter: blur(4px);
-  }
-  .video-modal__inner {
-    position: relative;
-  }
-  .video-modal__frame {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  }
-  .video-modal__frame iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-  .video-modal__close {
-    position: absolute;
-    top: -14px;
-    right: -14px;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 9999px;
-    background: #fff;
-    color: var(--color-navy);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease;
-  }
-  .video-modal__close:hover {
-    transform: scale(1.08);
-  }
-  .video-modal__close svg {
-    width: 20px;
-    height: 20px;
-  }
-  @media (max-width: 640px) {
-    .video-modal__close {
-      top: -46px;
-      right: 0;
-      color: #fff;
-      background: rgba(255, 255, 255, 0.15);
-    }
-  }
-</style>
-
 <script>
-  const modal = document.getElementById('video-modal') as HTMLDialogElement | null;
+  // Player facade: substitui o poster pelo iframe do YouTube ao clicar,
+  // tocando o vídeo no próprio container. O iframe só é criado no clique
+  // (nada de terceiros carrega antes disso).
+  const player = document.getElementById('video-player');
+  const trigger = player?.querySelector<HTMLButtonElement>('[data-video-play]');
+  const src = player?.dataset.src ?? '';
 
-  if (modal) {
-    const iframe = modal.querySelector('iframe')!;
-    const src = modal.dataset.src ?? '';
-    const openers = document.querySelectorAll('[data-video-open]');
-
-    const open = () => {
-      // separador correto caso a URL já tenha query string
+  if (player && trigger && src) {
+    trigger.addEventListener('click', () => {
       const sep = src.includes('?') ? '&' : '?';
-      iframe.src = `${src}${sep}autoplay=1`;
-      modal.showModal();
-    };
-
-    const close = () => {
-      modal.close();
-      iframe.src = ''; // para o vídeo ao fechar
-    };
-
-    openers.forEach((btn) => btn.addEventListener('click', open));
-    modal.querySelector('[data-video-close]')?.addEventListener('click', close);
-
-    // clique no backdrop (fora do conteúdo) fecha
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) close();
-    });
-    // ESC nativo do <dialog> também dispara o cleanup do iframe
-    modal.addEventListener('cancel', (e) => {
-      e.preventDefault();
-      close();
+      const iframe = document.createElement('iframe');
+      iframe.src = `${src}${sep}autoplay=1&rel=0`;
+      iframe.title = 'Vídeo institucional da Diamante Energia';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.className = 'absolute inset-0 h-full w-full border-0';
+      trigger.replaceWith(iframe);
+      iframe.focus();
     });
   }
 </script>

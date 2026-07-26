@@ -14,12 +14,12 @@ export const SITE = {
 } as const;
 
 /**
- * Vídeo institucional exibido na seção "A Empresa" (abre em modal).
- * Use a URL de EMBED (YouTube: https://www.youtube.com/embed/ID ·
- * Vimeo: https://player.vimeo.com/video/ID). Vazio = play desativado.
+ * Vídeo institucional da seção "A Empresa" (toca inline no container).
+ * URL de EMBED. `youtube-nocookie` não grava cookies até o play.
+ * Vazio = play desativado.
  */
-// TODO(dev-todo-list): preencher com a URL de embed do vídeo institucional
-export const VIDEO_EMBED_URL = '';
+export const VIDEO_EMBED_URL =
+  'https://www.youtube-nocookie.com/embed/aaFToGqRAZ0';
 
 /** Link de inscrição — usado por todos os CTAs da página. */
 // TODO(dev-todo-list #3): substituir pela URL real do formulário
