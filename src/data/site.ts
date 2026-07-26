@@ -13,6 +13,14 @@ export const SITE = {
   ogImage: '/images/og-image.jpg',
 } as const;
 
+/**
+ * Vídeo institucional exibido na seção "A Empresa" (abre em modal).
+ * Use a URL de EMBED (YouTube: https://www.youtube.com/embed/ID ·
+ * Vimeo: https://player.vimeo.com/video/ID). Vazio = play desativado.
+ */
+// TODO(dev-todo-list): preencher com a URL de embed do vídeo institucional
+export const VIDEO_EMBED_URL = '';
+
 /** Link de inscrição — usado por todos os CTAs da página. */
 // TODO(dev-todo-list #3): substituir pela URL real do formulário
 export const APPLY_URL = '#inscricao';
