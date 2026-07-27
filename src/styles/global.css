@@ -67,12 +67,15 @@ html {
   html {
     scroll-behavior: auto;
   }
+  /* Suprime apenas animações automáticas/em loop. As transições de interação
+     (hover, foco) continuam funcionando — são feedback sob controle do usuário,
+     e as animações de ENTRADA já são gated por prefers-reduced-motion:
+     no-preference, então não disparam aqui. */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
   }
 }
 
