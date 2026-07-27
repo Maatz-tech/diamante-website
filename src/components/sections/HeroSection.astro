@@ -9,7 +9,7 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
 <section
   id="topo"
-  class="bg-hero-gradient relative isolate overflow-hidden min-[1340px]:h-[692px]"
+  class="bg-hero-gradient relative isolate overflow-hidden xl:h-[692px]"
 >
   <!-- Decorações de fundo -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
@@ -47,7 +47,7 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
       alt=""
       width="702"
       height="800"
-      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none opacity-40 min-[1340px]:block"
+      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none opacity-40 xl:block"
     />
     <!-- Leque/círculo dourado atrás da foto. Simétrico e completo: em telas
          largas o círculo aparece inteiro (centralizado) em vez de cortar. -->
@@ -56,15 +56,15 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
       alt=""
       width="1470"
       height="562"
-      class="absolute bottom-0 left-1/2 w-[760px] max-w-none -translate-x-1/2 min-[1340px]:left-auto min-[1340px]:right-0 min-[1340px]:w-[1470px] min-[1340px]:translate-x-1/2"
+      class="absolute bottom-0 left-1/2 w-[760px] max-w-none -translate-x-1/2 xl:left-auto xl:right-0 xl:w-[1470px] xl:translate-x-1/2"
     />
   </div>
 
   <div
-    class="container-page relative flex flex-col min-[1340px]:h-full min-[1340px]:flex-row min-[1340px]:items-start min-[1340px]:justify-between"
+    class="container-page relative flex flex-col xl:h-full xl:flex-row xl:items-start xl:justify-between"
   >
     <!-- Bloco de título e CTA -->
-    <div class="pt-[120px] min-[1340px]:w-[450px] min-[1340px]:shrink-0 min-[1340px]:pt-[178px]">
+    <div class="pt-[120px] xl:w-[450px] xl:shrink-0 xl:pt-[178px]">
       <!-- Lockup: PROGRAMA / TRAINEE / DIAMANTE ENERGIA -->
       <h1 class="text-white">
         <span class="hero-kicker block">Programa</span>
@@ -94,7 +94,7 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
     <!-- Cards de destaque -->
     <ul
-      class="relative z-10 mt-8 flex flex-col gap-6 min-[1340px]:mt-0 min-[1340px]:w-[282px] min-[1340px]:shrink-0 min-[1340px]:self-end min-[1340px]:pb-20"
+      class="relative z-10 mt-8 flex flex-col gap-6 xl:mt-0 xl:w-[282px] xl:shrink-0 xl:self-end xl:pb-20"
     >
       {
         HIGHLIGHTS.map((item) => (
@@ -108,12 +108,12 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
   <!-- Foto principal: encerra a seção no mobile; absoluta no desktop -->
   <div
-    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden min-[1340px]:absolute min-[1340px]:bottom-0 min-[1340px]:left-[calc(50%+34px)] min-[1340px]:mt-0 min-[1340px]:h-[591px] min-[1340px]:w-[418px] min-[1340px]:-translate-x-1/2"
+    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden xl:absolute xl:bottom-0 xl:left-[calc(50%+34px)] xl:mt-0 xl:h-[591px] xl:w-[418px] xl:-translate-x-1/2"
   >
     <img
       src={img('images/hero-photo.webp')}
       srcset={`${img('images/hero-photo-sm.webp')} 640w, ${img('images/hero-photo.webp')} 1125w`}
-      sizes="(min-width: 1340px) 418px, 300px"
+      sizes="(min-width: 1280px) 418px, 300px"
       alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
       width="418"
       height="591"

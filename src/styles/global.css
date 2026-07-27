@@ -348,18 +348,16 @@ body {
   border-radius: var(--radius-card);
 }
 
-/* Container padrão do layout */
+/* Container padrão do layout.
+   max-width fixo (1200 de conteúdo + 2×24 de padding) e padding igual ao
+   mobile em qualquer tela. Em telas largas o recuo lateral vem da margem
+   automática — em 1440 dá exatamente os 120px do Figma; em telas médias a
+   margem encolhe sozinha, sem degrau de padding. */
 .container-page {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1248px;
   margin-inline: auto;
   padding-inline: 24px;
-}
-
-@media (min-width: 1024px) {
-  .container-page {
-    padding-inline: 120px;
-  }
 }
 
 /* Gradiente azul do hero e do menu mobile */
