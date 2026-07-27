@@ -10,7 +10,7 @@ export default defineConfig({
   site: 'https://diamanteenergia.com.br',
   // GitHub Pages serve o repo de projeto em /<repo>/. Quando o domínio próprio
   // for anexado (servindo na raiz), trocar para base: '/'.
-  base: '/diamente-website/',
+  base: '/diamante-website/',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()]
