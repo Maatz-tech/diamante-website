@@ -15,9 +15,9 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
       title="Energia para transformar. Pessoas para fazer acontecer."
     />
 
-    <div class="flex flex-col gap-8 xl:flex-row xl:items-center xl:gap-20">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-20">
       <!-- Coluna de texto: no mobile vai depois da mídia -->
-      <div class="order-2 flex flex-col gap-8 lg:gap-10 xl:order-1 xl:w-[500px] xl:shrink-0">
+      <div class="order-2 flex flex-col gap-8 lg:gap-10 lg:order-1 lg:w-[500px] lg:shrink-0">
         <div class="flex flex-col gap-4 text-base/[1.25] text-[#3c3c42]">
           <p>
             Na <strong class="font-medium text-navy">Diamante Energia</strong>,
@@ -51,13 +51,14 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
       </div>
 
       <!-- Mídia + cards -->
-      <div class="order-1 flex flex-col gap-6 xl:order-2 xl:min-w-0 xl:flex-1">
-        <!-- Player facade: o iframe do YouTube só carrega ao clicar (o vídeo
-             toca no próprio container, sem modal). -->
+      <div class="order-1 flex flex-col gap-6 lg:order-2 lg:min-w-0 lg:flex-1">
+        <!-- Player facade: o iframe do YouTube só carrega ao clicar e é montado
+             POR CIMA do poster. Fundo preto + borda preservada evitam o flash
+             branco enquanto o vídeo carrega. -->
         <div
           id="video-player"
           data-src={VIDEO_EMBED_URL}
-          class="group relative aspect-video w-full overflow-hidden rounded-3xl"
+          class="group/player group relative aspect-video w-full overflow-hidden rounded-3xl bg-black"
         >
           <button
             type="button"
@@ -75,12 +76,22 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
               width="1280"
               height="720"
               loading="lazy"
-              class="size-full object-cover"
+              class="size-full object-cover transition-opacity duration-300 group-[.is-loading]/player:opacity-70"
             />
+            <!-- Ícone de play (esconde ao carregar) -->
             <span
-              class="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(51,42,222,0.1)] text-white backdrop-blur-sm transition-transform group-hover:scale-110"
+              class="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(51,42,222,0.1)] text-white backdrop-blur-sm transition-transform group-hover:scale-110 group-[.is-loading]/player:hidden"
             >
               <PlayIcon class="size-8" />
+            </span>
+            <!-- Spinner de loading (aparece ao clicar) -->
+            <span
+              class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 group-[.is-loading]/player:block"
+            >
+              <svg class="size-12 animate-spin text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.25" />
+                <path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              </svg>
             </span>
           </button>
         </div>
@@ -114,6 +125,9 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
 
   if (player && trigger && src) {
     trigger.addEventListener('click', () => {
+      // mostra o spinner mantendo o poster/borda visíveis (sem flash branco)
+      player.classList.add('is-loading');
+
       const sep = src.includes('?') ? '&' : '?';
       const iframe = document.createElement('iframe');
       iframe.src = `${src}${sep}autoplay=1&rel=0`;
@@ -121,9 +135,16 @@ const hasVideo = VIDEO_EMBED_URL.length > 0;
       iframe.allow =
         'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.allowFullscreen = true;
-      iframe.className = 'absolute inset-0 h-full w-full border-0';
-      trigger.replaceWith(iframe);
-      iframe.focus();
+      // montado POR CIMA do poster; aparece com fade só quando termina de carregar
+      iframe.className =
+        'absolute inset-0 z-10 h-full w-full border-0 opacity-0 transition-opacity duration-500';
+      iframe.addEventListener('load', () => {
+        iframe.style.opacity = '1';
+        player.classList.remove('is-loading');
+        trigger.remove(); // remove o poster só depois que o vídeo já cobre
+        iframe.focus();
+      });
+      player.appendChild(iframe);
     });
   }
 </script>

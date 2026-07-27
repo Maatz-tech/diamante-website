@@ -21,9 +21,9 @@ export const SITE = {
 export const VIDEO_EMBED_URL =
   'https://www.youtube-nocookie.com/embed/aaFToGqRAZ0';
 
-/** Link de inscrição — usado por todos os CTAs da página. */
-// TODO(dev-todo-list #3): substituir pela URL real do formulário
-export const APPLY_URL = '#inscricao';
+/** Link de inscrição (Eureca) — usado por todos os CTAs da página. */
+export const APPLY_URL =
+  'https://app.eureca.me/programas/019f8f69-ab3d-7bab-bfcc-d38301fd2494?utm_source=hotsite&utm_medium=organic&utm_campaign=diamanteenergia.01.trn_2026_trainee&utm_content=atracao';
 
 /** Navegação principal (header desktop + menu mobile). */
 export const NAV_LINKS = [
@@ -156,9 +156,21 @@ export const FAQ = [
 /** Redes sociais do footer. */
 // TODO(dev-todo-list #3): confirmar URLs reais
 export const SOCIAL_LINKS = [
-  { href: '#', label: 'Instagram', icon: 'instagram' },
-  { href: '#', label: 'LinkedIn', icon: 'linkedin' },
-  { href: '#', label: 'YouTube', icon: 'youtube' },
+  {
+    href: 'https://www.instagram.com/diamante.energia',
+    label: 'Instagram',
+    icon: 'instagram',
+  },
+  {
+    href: 'https://www.linkedin.com/company/diamante-gera%C3%A7%C3%A3o-de-energia/',
+    label: 'LinkedIn',
+    icon: 'linkedin',
+  },
+  {
+    href: 'https://www.youtube.com/@diamanteenergia',
+    label: 'YouTube',
+    icon: 'youtube',
+  },
 ] as const;
 
 /** Links legais da barra inferior do footer. */

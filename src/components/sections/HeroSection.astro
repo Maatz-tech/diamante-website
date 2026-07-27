@@ -9,7 +9,7 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
 <section
   id="topo"
-  class="bg-hero-gradient relative isolate overflow-hidden xl:h-[692px]"
+  class="bg-hero-gradient relative isolate overflow-hidden lg:h-[692px]"
 >
   <!-- Decorações de fundo -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
@@ -47,24 +47,24 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
       alt=""
       width="702"
       height="800"
-      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none opacity-40 xl:block"
+      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none opacity-40 lg:block"
     />
-    <!-- Leque/círculo dourado atrás da foto. Simétrico e completo: em telas
-         largas o círculo aparece inteiro (centralizado) em vez de cortar. -->
+    <!-- Leque/círculo dourado: no desktop ancorado à direita, com o pico na
+         borda e ~50% para fora. Empilhado no mobile fica centralizado embaixo. -->
     <img
       src={img('images/hero-shape.svg')}
       alt=""
       width="1470"
       height="562"
-      class="absolute bottom-0 left-1/2 w-[760px] max-w-none -translate-x-1/2 xl:left-auto xl:right-0 xl:w-[1470px] xl:translate-x-1/2"
+      class="absolute bottom-0 right-0 w-[880px] max-w-none translate-x-1/2 lg:w-[clamp(1040px,105vw,1470px)]"
     />
   </div>
 
   <div
-    class="container-page relative flex flex-col xl:h-full xl:flex-row xl:items-start xl:justify-between"
+    class="container-page relative flex flex-col lg:h-full lg:flex-row lg:items-start lg:justify-between lg:gap-4"
   >
     <!-- Bloco de título e CTA -->
-    <div class="pt-[120px] xl:w-[450px] xl:shrink-0 xl:pt-[178px]">
+    <div class="pt-[120px] lg:w-[38%] lg:max-w-[450px] lg:shrink-0 lg:pt-[178px]">
       <!-- Lockup: PROGRAMA / TRAINEE / DIAMANTE ENERGIA -->
       <h1 class="text-white">
         <span class="hero-kicker block">Programa</span>
@@ -74,7 +74,7 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
           width="440"
           height="102"
           fetchpriority="high"
-          class="trainee-mark max-w-[326px] lg:max-w-[440px]"
+          class="trainee-mark max-w-[326px] lg:max-w-full xl:max-w-[440px]"
         />
         <span class="hero-kicker-strong block">Diamante Energia</span>
       </h1>
@@ -94,7 +94,7 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 
     <!-- Cards de destaque -->
     <ul
-      class="relative z-10 mt-8 flex flex-col gap-6 xl:mt-0 xl:w-[282px] xl:shrink-0 xl:self-end xl:pb-20"
+      class="relative z-10 mt-8 flex flex-col gap-6 lg:mt-0 lg:w-[248px] lg:shrink-0 lg:self-end lg:pb-20 xl:w-[282px]"
     >
       {
         HIGHLIGHTS.map((item) => (
@@ -106,19 +106,17 @@ const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
     </ul>
   </div>
 
-  <!-- Foto principal: encerra a seção no mobile; absoluta no desktop -->
-  <div
-    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden xl:absolute xl:bottom-0 xl:left-[calc(50%+34px)] xl:mt-0 xl:h-[591px] xl:w-[418px] xl:-translate-x-1/2"
-  >
-    <img
-      src={img('images/hero-photo.webp')}
-      srcset={`${img('images/hero-photo-sm.webp')} 640w, ${img('images/hero-photo.webp')} 1125w`}
-      sizes="(min-width: 1280px) 418px, 300px"
-      alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
-      width="418"
-      height="591"
-      fetchpriority="high"
-      class="size-full scale-[1.15] object-cover object-top"
-    />
-  </div>
+  <!-- Foto principal: proporção natural (nunca corta nem distorce), escala
+       pela altura. Encerra a seção no mobile; absoluta no desktop, sobrepondo
+       com as bordas transparentes. -->
+  <img
+    src={img('images/hero-photo.webp')}
+    srcset={`${img('images/hero-photo-sm.webp')} 640w, ${img('images/hero-photo.webp')} 1125w`}
+    sizes="(min-width: 1024px) 480px, 300px"
+    alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
+    width="418"
+    height="591"
+    fetchpriority="high"
+    class="mx-auto mt-6 block h-[380px] w-auto max-w-none object-bottom lg:absolute lg:bottom-0 lg:left-[calc(50%+34px)] lg:mt-0 lg:h-[clamp(480px,46vw,591px)] lg:-translate-x-1/2"
+  />
 </section>

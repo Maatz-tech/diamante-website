@@ -4,15 +4,15 @@ import { FAQ, APPLY_URL } from '../../data/site';
 
 <section id="faq" class="bg-off-white">
   <div
-    class="container-page flex flex-col gap-8 py-16 lg:py-20 xl:flex-row xl:items-start xl:gap-20"
+    class="container-page flex flex-col gap-8 py-16 lg:py-20 lg:flex-row lg:items-start lg:gap-20"
   >
     <!-- Coluna esquerda: título + imagem com CTA -->
-    <div class="flex flex-col gap-6 lg:gap-10 xl:h-[487px] xl:w-[348px] xl:shrink-0">
+    <div class="flex flex-col gap-6 lg:gap-10 lg:h-[487px] lg:w-[348px] lg:shrink-0">
       <h2 class="h2">Perguntas frequentes</h2>
 
       <a
         href={APPLY_URL}
-        class="group relative isolate hidden flex-1 overflow-hidden rounded-3xl xl:block"
+        class="group relative isolate hidden flex-1 overflow-hidden rounded-3xl lg:block"
       >
         <img
           src={`${import.meta.env.BASE_URL}images/faq.webp`}
@@ -44,7 +44,7 @@ import { FAQ, APPLY_URL } from '../../data/site';
     </div>
 
     <!-- Acordeões -->
-    <div class="flex flex-col gap-4 xl:min-w-0 xl:flex-1">
+    <div class="flex flex-col gap-4 lg:min-w-0 lg:flex-1">
       {
         FAQ.map((item) => (
           <details class="faq-item rounded-3xl bg-white p-6">
