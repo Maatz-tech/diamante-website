@@ -16,7 +16,10 @@ const borderClass =
 const valueClass = size === 'lg' ? 'text-2xl/[1.2]' : 'text-xl/[1.2]';
 ---
 
-<div data-card class={`card border ${borderClass} p-6 text-center`}>
+<div
+  data-card
+  class={`card flex h-full flex-col justify-center border ${borderClass} p-6 text-center`}
+>
   <p class="text-lg/[1.2] text-navy">{label}</p>
   <p class={`mt-2 font-medium text-navy ${valueClass}`}>{value}</p>
 </div>

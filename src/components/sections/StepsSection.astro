@@ -12,7 +12,7 @@ import { STEPS } from '../../data/site';
     height="176"
     aria-hidden="true"
     loading="lazy"
-    class="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[1477px] max-w-none -translate-x-1/2 translate-y-[calc(-50%+72px)] lg:block"
+    class="pointer-events-none absolute left-0 top-1/2 z-0 hidden h-[176px] w-full -translate-y-[calc(50%-72px)] lg:block"
   />
 
   <div
@@ -25,7 +25,7 @@ import { STEPS } from '../../data/site';
     />
 
     <ol
-      class="grid w-full gap-9 lg:w-[1086px] lg:grid-cols-3 lg:gap-x-20 lg:gap-y-20"
+      class="grid w-full gap-9 lg:mx-auto lg:max-w-[1086px] lg:grid-cols-3 lg:gap-x-12 lg:gap-y-20 xl:gap-x-20"
     >
       {
         STEPS.map((step, index) => (

@@ -1,5 +1,6 @@
 ---
-import { SOCIAL_LINKS, LEGAL_LINKS } from '../data/site';
+import { SOCIAL_LINKS, LEGAL_DOCS } from '../data/site';
+import CloseIcon from './icons/CloseIcon.astro';
 import BrandBar from './BrandBar.astro';
 import InstagramIcon from './icons/InstagramIcon.astro';
 import LinkedinIcon from './icons/LinkedinIcon.astro';
@@ -69,14 +70,15 @@ const icons = {
     >
       <ul class="flex flex-wrap items-center justify-center gap-4">
         {
-          LEGAL_LINKS.map((link) => (
+          LEGAL_DOCS.map((doc) => (
             <li>
-              <a
-                href={link.href}
-                class="text-[#3c3c42] underline underline-offset-2 transition-colors hover:text-blue"
+              <button
+                type="button"
+                data-legal-open={doc.id}
+                class="cursor-pointer text-[#3c3c42] underline underline-offset-2 transition-colors hover:text-blue"
               >
-                {link.label}
-              </a>
+                {doc.label}
+              </button>
             </li>
           ))
         }
@@ -95,4 +97,107 @@ const icons = {
       </p>
     </div>
   </div>
+
+  <!-- Modais legais -->
+  {
+    LEGAL_DOCS.map((doc) => (
+      <dialog
+        id={`legal-${doc.id}`}
+        class="legal-modal"
+        aria-labelledby={`legal-${doc.id}-title`}
+      >
+        <div class="legal-modal__inner">
+          <header class="legal-modal__head">
+            <div>
+              <h2 id={`legal-${doc.id}-title`} class="h3">
+                {doc.label}
+              </h2>
+              <p class="mt-1 text-sm text-stone">
+                Última atualização: {doc.updatedAt}
+              </p>
+            </div>
+            <button
+              type="button"
+              data-legal-close
+              class="flex size-10 shrink-0 items-center justify-center rounded-full text-navy transition-colors hover:bg-off-white"
+              aria-label="Fechar"
+            >
+              <CloseIcon class="size-5" />
+            </button>
+          </header>
+          <div class="legal-modal__body">
+            {doc.body.map((p) => (
+              <p class="whitespace-pre-line text-base/[1.5] text-[#3c3c42]">{p}</p>
+            ))}
+          </div>
+        </div>
+      </dialog>
+    ))
+  }
 </footer>
+
+<style>
+  .legal-modal {
+    width: min(680px, calc(100vw - 32px));
+    max-height: calc(100vh - 64px);
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 24px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .legal-modal::backdrop {
+    background: rgba(0, 9, 41, 0.6);
+    backdrop-filter: blur(4px);
+  }
+  .legal-modal__inner {
+    display: flex;
+    max-height: calc(100vh - 64px);
+    flex-direction: column;
+  }
+  .legal-modal__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid var(--color-mute);
+  }
+  .legal-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    padding: 24px;
+  }
+</style>
+
+<script>
+  const openers = document.querySelectorAll<HTMLElement>('[data-legal-open]');
+
+  openers.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-legal-open');
+      const modal = document.getElementById(
+        `legal-${id}`
+      ) as HTMLDialogElement | null;
+      if (!modal) return;
+      modal.showModal();
+      modal.querySelector<HTMLElement>('[data-legal-close]')?.focus();
+
+      const close = () => modal.close();
+      modal
+        .querySelector('[data-legal-close]')
+        ?.addEventListener('click', close, { once: true });
+      // clique no backdrop (fora do conteúdo) fecha
+      modal.addEventListener(
+        'click',
+        (e) => {
+          if (e.target === modal) close();
+        },
+        { once: true }
+      );
+    });
+  });
+</script>

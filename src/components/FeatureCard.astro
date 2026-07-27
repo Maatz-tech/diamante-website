@@ -13,10 +13,10 @@ const { icon, title, description, class: className = '' } = Astro.props;
 
 <article
   data-card
-  class={`card group/card flex h-full flex-col gap-10 p-6 transition-shadow duration-300 hover:shadow-[0_12px_32px_rgba(21,41,109,0.10)] ${className}`}
+  class={`card group/card flex h-full flex-col gap-10 border border-transparent p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:-translate-y-1.5 hover:border-blue/15 hover:shadow-[0_12px_30px_rgba(21,41,109,0.08)] ${className}`}
 >
   <span
-    class="flex w-fit items-center justify-center rounded-xl bg-blue p-3 text-white transition-transform duration-300 group-hover/card:-translate-y-0.5 group-hover/card:scale-105"
+    class="flex w-fit items-center justify-center rounded-xl bg-blue p-3 text-white"
   >
     <Icon name={icon} class="size-6" />
   </span>

@@ -2,6 +2,9 @@
 import { APPLY_URL, HIGHLIGHTS } from '../../data/site';
 import Button from '../Button.astro';
 import HighlightCard from '../HighlightCard.astro';
+
+const base = import.meta.env.BASE_URL;
+const img = (p: string) => `${base}${p.replace(/^\//, '')}`;
 ---
 
 <section
@@ -11,72 +14,67 @@ import HighlightCard from '../HighlightCard.astro';
   <!-- Decorações de fundo -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
     <img
-      src={`${import.meta.env.BASE_URL}images/line-shape.webp`}
+      src={img('images/line-shape.webp')}
       alt=""
       width="2048"
       height="1430"
       class="absolute -left-[877px] -top-[378px] w-[2515px] max-w-none opacity-30"
     />
     <img
-      src={`${import.meta.env.BASE_URL}images/line-shape.webp`}
+      src={img('images/line-shape.webp')}
       alt=""
       width="2048"
       height="1430"
       class="absolute -top-[364px] left-[212px] w-[2515px] max-w-none -scale-y-100 opacity-30"
     />
     <img
-      src={`${import.meta.env.BASE_URL}images/texture.webp`}
+      src={img('images/texture.webp')}
       alt=""
       width="480"
       height="600"
       class="absolute inset-0 size-full object-cover opacity-10 mix-blend-multiply"
     />
-    <!-- Leque dourado + curva. Desktop: lado direito. Mobile: canto inferior. -->
+    <!-- Manchas de luz radiais (sutis, como no Figma) -->
     <img
-      src={`${import.meta.env.BASE_URL}images/hero-vector3.svg`}
-      alt=""
-      width="701"
-      height="534"
-      class="absolute bottom-0 right-0 w-[78%] max-w-none lg:bottom-auto lg:left-[739px] lg:top-[162px] lg:w-[701px]"
-    />
-    <img
-      src={`${import.meta.env.BASE_URL}images/hero-vector4.svg`}
-      alt=""
-      width="735"
-      height="561"
-      class="absolute bottom-[8%] right-0 w-[82%] max-w-none lg:bottom-auto lg:left-[708px] lg:top-[138px] lg:w-[735px]"
-    />
-    <img
-      src={`${import.meta.env.BASE_URL}images/ellipse-1.svg`}
-      alt=""
-      width="702"
-      height="800"
-      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none lg:block"
-    />
-    <img
-      src={`${import.meta.env.BASE_URL}images/ellipse-2.svg`}
+      src={img('images/ellipse-2.svg')}
       alt=""
       width="702"
       height="524"
-      class="absolute -left-[412px] -top-[82px] w-[702px] max-w-none"
+      class="absolute -left-[412px] -top-[82px] w-[702px] max-w-none opacity-40"
+    />
+    <img
+      src={img('images/ellipse-1.svg')}
+      alt=""
+      width="702"
+      height="800"
+      class="absolute left-[321px] top-12 hidden w-[702px] max-w-none opacity-40 lg:block"
+    />
+    <!-- Leque/círculo dourado: no desktop ancorado à direita, com o pico na
+         borda e ~50% para fora. Empilhado no mobile fica centralizado embaixo. -->
+    <img
+      src={img('images/hero-shape.svg')}
+      alt=""
+      width="1470"
+      height="562"
+      class="absolute bottom-0 right-0 w-[880px] max-w-none translate-x-1/2 lg:w-[clamp(1040px,105vw,1470px)]"
     />
   </div>
 
   <div
-    class="container-page relative flex flex-col lg:h-full lg:flex-row lg:items-start lg:justify-between"
+    class="container-page relative flex flex-col lg:h-full lg:flex-row lg:items-start lg:justify-between lg:gap-4"
   >
     <!-- Bloco de título e CTA -->
-    <div class="pt-[120px] lg:w-[450px] lg:shrink-0 lg:pt-[178px]">
+    <div class="pt-[120px] lg:w-[38%] lg:max-w-[450px] lg:shrink-0 lg:pt-[178px]">
       <!-- Lockup: PROGRAMA / TRAINEE / DIAMANTE ENERGIA -->
       <h1 class="text-white">
         <span class="hero-kicker block">Programa</span>
         <img
-          src={`${import.meta.env.BASE_URL}images/logo-trainee.webp`}
+          src={img('images/logo-trainee.webp')}
           alt="Trainee"
           width="440"
           height="102"
           fetchpriority="high"
-          class="trainee-mark max-w-[326px] lg:max-w-[440px]"
+          class="trainee-mark max-w-[326px] lg:max-w-full xl:max-w-[440px]"
         />
         <span class="hero-kicker-strong block">Diamante Energia</span>
       </h1>
@@ -96,31 +94,29 @@ import HighlightCard from '../HighlightCard.astro';
 
     <!-- Cards de destaque -->
     <ul
-      class="relative z-10 mt-8 flex flex-col gap-6 lg:mt-0 lg:w-[282px] lg:shrink-0 lg:self-end lg:pb-20"
+      class="relative z-10 mt-8 flex flex-col gap-6 lg:mt-0 lg:w-[248px] lg:shrink-0 lg:self-end lg:pb-20 xl:w-[282px]"
     >
       {
         HIGHLIGHTS.map((item) => (
           <li>
-            <HighlightCard label={item.label} value={item.value} size={item.size ?? "md"} />
+            <HighlightCard label={item.label} value={item.value} />
           </li>
         ))
       }
     </ul>
   </div>
 
-  <!-- Foto principal: encerra a seção no mobile; absoluta no desktop -->
-  <div
-    class="mx-auto mt-6 h-[374px] w-[300px] overflow-hidden lg:absolute lg:bottom-0 lg:left-[calc(50%+34px)] lg:mt-0 lg:h-[591px] lg:w-[418px] lg:-translate-x-1/2"
-  >
-    <img
-      src={`${import.meta.env.BASE_URL}images/hero-photo.webp`}
-      srcset={`${import.meta.env.BASE_URL}images/hero-photo-sm.webp 640w, ${import.meta.env.BASE_URL}images/hero-photo.webp 1125w`}
-      sizes="(min-width: 1024px) 418px, 300px"
-      alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
-      width="418"
-      height="591"
-      fetchpriority="high"
-      class="size-full scale-[1.15] object-cover object-top"
-    />
-  </div>
+  <!-- Foto principal: proporção natural (nunca corta nem distorce), escala
+       pela altura. Encerra a seção no mobile; absoluta no desktop, sobrepondo
+       com as bordas transparentes. -->
+  <img
+    src={img('images/hero-photo.webp')}
+    srcset={`${img('images/hero-photo-sm.webp')} 640w, ${img('images/hero-photo.webp')} 1125w`}
+    sizes="(min-width: 1024px) 480px, 300px"
+    alt="Trainee da Diamante Energia com capacete e equipamentos de segurança"
+    width="418"
+    height="591"
+    fetchpriority="high"
+    class="mx-auto mt-6 block h-[380px] w-auto max-w-none object-bottom lg:absolute lg:bottom-0 lg:left-[calc(50%+34px)] lg:mt-0 lg:h-[clamp(480px,46vw,591px)] lg:-translate-x-1/2"
+  />
 </section>

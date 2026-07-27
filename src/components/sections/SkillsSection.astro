@@ -7,13 +7,12 @@ import { SKILLS, APPLY_URL } from '../../data/site';
 
 <section id="desenvolvimento" class="bg-white">
   <div
-    class="flex flex-col items-center gap-8 py-16 lg:gap-12 lg:py-20"
+    class="container-page flex flex-col items-center gap-8 py-16 lg:gap-12 lg:py-20"
   >
     <SectionHeader
       eyebrow="A Diamante Energia"
       title="O que você vai desenvolver"
       align="center"
-      class="container-page"
     />
 
     <!-- Carrossel no mobile (scroll-snap), grid no desktop -->
@@ -23,7 +22,7 @@ import { SKILLS, APPLY_URL } from '../../data/site';
       data-carousel-track
       tabindex="0"
       aria-label="Competências desenvolvidas no programa"
-      class="flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 lg:grid lg:grid-cols-4 lg:items-stretch lg:overflow-visible lg:px-[120px] lg:pb-0"
+      class="flex w-full min-w-0 snap-x snap-mandatory gap-6 overflow-x-auto pb-2 lg:grid lg:grid-cols-4 lg:items-stretch lg:overflow-visible lg:pb-0"
     >
       {
         SKILLS.map((skill) => (

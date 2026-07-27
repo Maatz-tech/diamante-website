@@ -7,10 +7,10 @@ import { APPLY_URL } from '../../data/site';
 
 <section id="cultura" class="bg-white">
   <div
-    class="container-page flex flex-col gap-8 py-16 lg:flex-row lg:items-center lg:gap-20 lg:py-20"
+    class="container-page flex flex-col gap-8 py-16 lg:py-20 lg:flex-row lg:items-center lg:gap-20"
   >
     <!-- Texto -->
-    <div class="flex flex-col gap-6 lg:w-[500px] lg:shrink-0 lg:gap-10">
+    <div class="flex flex-col gap-6 lg:gap-10 lg:w-[500px] lg:shrink-0">
       <SectionHeader
         eyebrow="Nossa Cultura"
         title="Crescer junto faz parte da nossa energia"
@@ -38,22 +38,23 @@ import { APPLY_URL } from '../../data/site';
       <Button href={APPLY_URL} class="self-start">Faça sua inscrição</Button>
     </div>
 
-    <!-- Mosaico -->
-    <div class="flex flex-col gap-6 lg:min-w-0 lg:flex-1">
-      <div class="flex gap-6">
+    <!-- Mosaico: cada linha é um grid de proporção fixa; a altura vem do
+         aspect-ratio das imagens, então tudo escala junto sem distorcer. -->
+    <div class="flex flex-col gap-4 lg:min-w-0 lg:flex-1 lg:gap-6">
+      <div class="grid grid-cols-[1.6fr_1fr] gap-4 lg:gap-6">
         <img
           src={`${import.meta.env.BASE_URL}images/cultura-1.webp`}
           data-reveal-img
           srcset={`${import.meta.env.BASE_URL}images/cultura-1-sm.webp 440w, ${import.meta.env.BASE_URL}images/cultura-1.webp 900w`}
-          sizes="(min-width: 1024px) 429px, 208px"
+          sizes="(min-width: 1024px) 429px, 62vw"
           alt="Equipe da Diamante Energia trabalhando em conjunto"
           width="429"
           height="241"
           loading="lazy"
-          class="h-[117px] w-[63%] rounded-3xl object-cover lg:h-[241px] lg:w-[429px] lg:shrink-0"
+          class="aspect-[429/241] w-full rounded-2xl object-cover lg:rounded-3xl"
         />
         <div
-          class="relative isolate flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-blue p-6 text-white"
+          class="relative isolate flex items-center justify-center overflow-hidden rounded-2xl bg-blue p-4 text-white"
         >
           <img
             src={`${import.meta.env.BASE_URL}images/texture.webp`}
@@ -64,13 +65,13 @@ import { APPLY_URL } from '../../data/site';
             loading="lazy"
             class="absolute inset-0 -z-10 size-full object-cover opacity-[0.07]"
           />
-          <Icon name="bolt" class="size-12 lg:size-20" />
+          <Icon name="bolt" class="size-10 lg:size-20" />
         </div>
       </div>
 
-      <div class="flex gap-6">
+      <div class="grid grid-cols-[1fr_1.6fr] gap-4 lg:gap-6">
         <div
-          class="relative isolate flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-orange-bright p-6"
+          class="relative isolate flex items-center justify-center overflow-hidden rounded-2xl bg-orange-bright p-4"
         >
           <img
             src={`${import.meta.env.BASE_URL}images/texture.webp`}
@@ -87,19 +88,19 @@ import { APPLY_URL } from '../../data/site';
             width="184"
             height="56"
             loading="lazy"
-            class="w-[110px] lg:w-[184px]"
+            class="w-[70%] max-w-[184px]"
           />
         </div>
         <img
           src={`${import.meta.env.BASE_URL}images/cultura-2.webp`}
           data-reveal-img
           srcset={`${import.meta.env.BASE_URL}images/cultura-2-sm.webp 440w, ${import.meta.env.BASE_URL}images/cultura-2.webp 700w`}
-          sizes="(min-width: 1024px) 337px, 208px"
+          sizes="(min-width: 1024px) 337px, 62vw"
           alt="Profissional da Diamante Energia em campo"
           width="337"
           height="189"
           loading="lazy"
-          class="h-[117px] w-[63%] rounded-3xl object-cover lg:h-[189px] lg:w-[337px] lg:shrink-0"
+          class="aspect-[337/189] w-full rounded-2xl object-cover lg:rounded-3xl"
         />
       </div>
     </div>

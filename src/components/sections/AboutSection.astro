@@ -3,7 +3,9 @@ import SectionHeader from '../SectionHeader.astro';
 import HighlightCard from '../HighlightCard.astro';
 import Button from '../Button.astro';
 import PlayIcon from '../icons/PlayIcon.astro';
-import { HIGHLIGHTS } from '../../data/site';
+import { HIGHLIGHTS, VIDEO_EMBED_URL } from '../../data/site';
+
+const hasVideo = VIDEO_EMBED_URL.length > 0;
 ---
 
 <section id="a-empresa" class="bg-white">
@@ -15,7 +17,7 @@ import { HIGHLIGHTS } from '../../data/site';
 
     <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-20">
       <!-- Coluna de texto: no mobile vai depois da mídia -->
-      <div class="order-2 flex flex-col gap-8 lg:order-1 lg:w-[500px] lg:shrink-0 lg:gap-10">
+      <div class="order-2 flex flex-col gap-8 lg:gap-10 lg:order-1 lg:w-[500px] lg:shrink-0">
         <div class="flex flex-col gap-4 text-base/[1.25] text-[#3c3c42]">
           <p>
             Na <strong class="font-medium text-navy">Diamante Energia</strong>,
@@ -50,29 +52,49 @@ import { HIGHLIGHTS } from '../../data/site';
 
       <!-- Mídia + cards -->
       <div class="order-1 flex flex-col gap-6 lg:order-2 lg:min-w-0 lg:flex-1">
-        <!-- TODO(dev-todo-list): apontar para o vídeo institucional real -->
-        <button
-          type="button"
-          class="group relative block aspect-video w-full overflow-hidden rounded-3xl"
-          aria-label="Assistir ao vídeo institucional da Diamante Energia"
+        <!-- Player facade: o iframe do YouTube só carrega ao clicar e é montado
+             POR CIMA do poster. Fundo preto + borda preservada evitam o flash
+             branco enquanto o vídeo carrega. -->
+        <div
+          id="video-player"
+          data-src={VIDEO_EMBED_URL}
+          class="group/player group relative aspect-video w-full overflow-hidden rounded-3xl bg-black"
         >
-          <img
-            src={`${import.meta.env.BASE_URL}images/sobre-video.webp`}
-            data-reveal-img
-            srcset={`${import.meta.env.BASE_URL}images/sobre-video-sm.webp 680w, ${import.meta.env.BASE_URL}images/sobre-video.webp 1280w`}
-            sizes="(min-width: 1024px) 590px, 327px"
-            alt=""
-            width="1280"
-            height="720"
-            loading="lazy"
-            class="size-full object-cover"
-          />
-          <span
-            class="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(51,42,222,0.1)] text-white backdrop-blur-sm transition-transform group-hover:scale-110"
+          <button
+            type="button"
+            data-video-play
+            disabled={!hasVideo}
+            class="absolute inset-0 block cursor-pointer disabled:cursor-default"
+            aria-label="Assistir ao vídeo institucional da Diamante Energia"
           >
-            <PlayIcon class="size-8" />
-          </span>
-        </button>
+            <img
+              src={`${import.meta.env.BASE_URL}images/sobre-video.webp`}
+              data-reveal-img
+              srcset={`${import.meta.env.BASE_URL}images/sobre-video-sm.webp 680w, ${import.meta.env.BASE_URL}images/sobre-video.webp 1280w`}
+              sizes="(min-width: 1024px) 590px, 327px"
+              alt=""
+              width="1280"
+              height="720"
+              loading="lazy"
+              class="size-full object-cover transition-[transform,opacity] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform group-hover:scale-[1.06] group-[.is-loading]/player:opacity-70"
+            />
+            <!-- Ícone de play (esconde ao carregar) -->
+            <span
+              class="absolute left-1/2 top-1/2 flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(51,42,222,0.1)] text-white backdrop-blur-sm transition-transform group-hover:scale-110 group-[.is-loading]/player:hidden"
+            >
+              <PlayIcon class="size-8" />
+            </span>
+            <!-- Spinner de loading (aparece ao clicar) -->
+            <span
+              class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 group-[.is-loading]/player:block"
+            >
+              <svg class="size-12 animate-spin text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" opacity="0.25" />
+                <path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              </svg>
+            </span>
+          </button>
+        </div>
 
         <ul class="grid gap-6 sm:grid-cols-2">
           {
@@ -92,3 +114,37 @@ import { HIGHLIGHTS } from '../../data/site';
     </div>
   </div>
 </section>
+
+<script>
+  // Player facade: substitui o poster pelo iframe do YouTube ao clicar,
+  // tocando o vídeo no próprio container. O iframe só é criado no clique
+  // (nada de terceiros carrega antes disso).
+  const player = document.getElementById('video-player');
+  const trigger = player?.querySelector<HTMLButtonElement>('[data-video-play]');
+  const src = player?.dataset.src ?? '';
+
+  if (player && trigger && src) {
+    trigger.addEventListener('click', () => {
+      // mostra o spinner mantendo o poster/borda visíveis (sem flash branco)
+      player.classList.add('is-loading');
+
+      const sep = src.includes('?') ? '&' : '?';
+      const iframe = document.createElement('iframe');
+      iframe.src = `${src}${sep}autoplay=1&rel=0`;
+      iframe.title = 'Vídeo institucional da Diamante Energia';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      // montado POR CIMA do poster; aparece com fade só quando termina de carregar
+      iframe.className =
+        'absolute inset-0 z-10 h-full w-full border-0 opacity-0 transition-opacity duration-500';
+      iframe.addEventListener('load', () => {
+        iframe.style.opacity = '1';
+        player.classList.remove('is-loading');
+        trigger.remove(); // remove o poster só depois que o vídeo já cobre
+        iframe.focus();
+      });
+      player.appendChild(iframe);
+    });
+  }
+</script>
