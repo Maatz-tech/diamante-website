@@ -392,11 +392,13 @@ body {
   opacity: 0;
   transform: translateY(18px);
   filter: blur(12px);
+  /* O delay do escalonamento vai por propriedade (só no reveal). O scale — usado
+     pelo hover no Tailwind v4 — fica com delay 0 para o hover responder na hora. */
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0s);
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    scale 0.2s ease 0s;
   will-change: opacity, transform, filter;
 }
 
@@ -437,11 +439,12 @@ body {
   opacity: 0;
   transform: scale(1.04);
   filter: blur(10px);
+  /* delay do reveal por propriedade; scale (hover) com delay 0 */
   transition:
-    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0s);
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    filter 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    scale 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0s;
 }
 [data-reveal-img].is-in {
   opacity: 1;
